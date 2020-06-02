@@ -1,1 +1,2 @@
 # freelanncerz
+[![Maintainability](https://api.codeclimate.com/v1/badges/696b28a46a4d9ba447e7/maintainability)](https://codeclimate.com/github/Muhire-Josue/freelancerz/maintainability) [![Build Status](https://travis-ci.org/Muhire-Josue/freelancerz.svg?branch=develop)](https://travis-ci.org/Muhire-Josue/freelancerz) [![Coverage Status](https://coveralls.io/repos/github/Muhire-Josue/freelancerz/badge.svg?branch=develop)](https://coveralls.io/github/Muhire-Josue/freelancerz?branch=develop)
