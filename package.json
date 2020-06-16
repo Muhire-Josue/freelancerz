@@ -15,9 +15,17 @@
   "homepage": "https://github.com/Muhire-Josue/freelanncerz#readme",
   "scripts": {
     "dev": "nodemon index.js --exec babel-node --presets @babel/preset-env",
-    "start": "babel-node ./src/index.js",
-    "test": "cross-env NODE_ENV=test && nyc mocha --require @babel/register ./tests/**/*.js  --timeout 30000 --exit",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "start": "babel-node index.js",
+    "create-db": "npx sequelize-cli db:create",
+    "drop-db": "npx sequelize-cli db:drop",
+    "migrations": "npx sequelize-cli db:migrate",
+    "undo": "npx sequelize-cli db:migrate:undo:all",
+    "seed": "npx sequelize-cli db:seed:all",
+    "undo-seed": "npx sequelize-cli db:seed:undo",
+    "test": "cross-env NODE_ENV=test && nyc mocha --require @babel/register --timeout 10000 --exit ./tests/**/*.js",
+    "pretest": "npm run drop-db && npm run create-db && npm run migrations && npm run seed ",
+    "posttest": "npm run undo-seed && npm run undo",
+    "coveralls": "cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "@babel/cli": "^7.8.4",
@@ -53,6 +61,7 @@
     "pg": "^7.18.2",
     "pg-hstore": "^2.3.3",
     "redis": "^3.0.2",
+    "regenerator-runtime": "^0.13.5",
     "sequelize": "^5.21.6",
     "sequelize-cli": "^5.5.1",
     "sequelize-test-helpers": "^1.2.2",
@@ -64,6 +73,8 @@
     "@babel/plugin-transform-runtime": "^7.9.0",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-istanbul": "^6.0.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "cross-env": "^7.0.2",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
@@ -76,9 +87,5 @@
     "pg-hstore": "^2.3.3",
     "request": "^2.88.2",
     "underscore": "^1.10.2"
-  },
-  "nyc": {
-    "sourceMap": false,
-    "instrument": false
   }
 }

@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
+import 'regenerator-runtime/runtime';
+import routes from './src/routes/index';
 
 const app = express();
 
@@ -11,6 +13,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(express.static(`${__dirname}/public`));
+app.use('/api/', routes);
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'welcome to freelancerz' });
