@@ -28,6 +28,9 @@ module.exports = {
     githubUsername: {
       type: Sequelize.STRING
     },
+    status: {
+      type: Sequelize.STRING
+    },
     userTypeId: {
       type: Sequelize.INTEGER
     },
