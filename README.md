@@ -38,7 +38,9 @@ npm test
 | API | Methods  | Description  |
 | ------- | --- | --- |
 | `/` | GET | Welcome message |
-| `api/user/auth/signup` | POST | Create account |
+| `api/auth/signup` | POST | Create account |
+| `api/auth/login` | POST | Login |
+| `api/jobs` | POST | Create Job |
 ### How can it be manually tested
 - using [postman](https://www.getpostman.com/downloads/)
 ### Pivotal tracker stories

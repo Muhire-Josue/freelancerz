@@ -24,9 +24,11 @@ export default class UserController {
     const salt = bcrypt.genSaltSync(10);
     const plainTextPassword = formData.password;
     formData.password = bcrypt.hashSync(plainTextPassword, salt);
-    formData.status = 'pending';
-    await createUser(formData);
-    const token = tokenGenerator(formData);
+    if (formData.userTypeId === 1) {
+      formData.status = 'pending';
+    }
+    const { dataValues } = await createUser(formData);
+    const token = tokenGenerator(dataValues);
     return successResponse(res, created, userCreated, token);
   }
 

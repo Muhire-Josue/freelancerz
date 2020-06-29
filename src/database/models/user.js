@@ -18,6 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     });
+    Users.hasMany(models.Job, {
+      as: 'users',
+      foreignKey: 'clientId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    });
   };
   return Users;
 };

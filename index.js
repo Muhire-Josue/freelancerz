@@ -13,7 +13,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(express.static(`${__dirname}/public`));
-app.use('/api/', routes);
+app.use(routes);
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'welcome to freelancerz' });

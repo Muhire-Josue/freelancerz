@@ -13,8 +13,8 @@ export default class UserServices {
      * @returns {object} returns the newly created user object
      */
   static async createUser(user) {
-    const { dataValues } = Users.create(user);
-    return dataValues;
+    const newUser = Users.create(user);
+    return newUser;
   }
 
   /**

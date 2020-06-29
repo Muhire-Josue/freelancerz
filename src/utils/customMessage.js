@@ -13,5 +13,16 @@ const messages = {
   userNotFound: 'No account associated to this credentials',
   incorrectPassword: 'Incorrect password',
   inactiveAccount: 'Account is not activated',
+  postJob: 'Job posted successfully',
+  unauthorizedAccess: 'Unauthorized access',
+  invalidToken: 'Invalid token',
+  invalidTitle: 'Please provide a valid title',
+  invalidPrice: 'Please provide a valid price',
+  invalidYearsOfExperience: 'Please provide a valid years of experience value',
+  invalidJobType: 'Please provide a valid job type',
+  invalidStartDate: 'Please provide valid start date',
+  invalidEndDate: 'Please provide valid end date',
+  invalidJobDescription: 'Please provide valid Job description',
+  jobDuplication: 'You can not create the same project twice'
 };
 export default messages;
