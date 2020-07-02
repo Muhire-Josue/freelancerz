@@ -1,8 +1,10 @@
 import express from 'express';
-import userAccount from './userAccount.routes';
+import userAccountRoutes from './userAccount.routes';
+import jobRoutes from './job.routes';
 
 const app = express.Router();
 
-app.use('/user/', userAccount);
+app.use('/api/', userAccountRoutes);
+app.use('/api', jobRoutes);
 
 export default app;
