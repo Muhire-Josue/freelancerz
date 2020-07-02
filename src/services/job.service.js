@@ -27,7 +27,7 @@ export default class JobService {
   }
 
   /**
- * @description finds a job of a particular client
+ * @description finds all jobs with particular status
  * @param {integer} status
  * @returns {object} it returns the job based on a particular status
  */
@@ -37,5 +37,18 @@ export default class JobService {
       include: [{ model: Users, as: 'jobOwner' }]
     });
     return jobs;
+  }
+
+  /**
+   * @description finds a job based on the job id
+   * @param {string} id
+   * @returns {object} it returns the job found
+   */
+  static async getJobById(id) {
+    const job = await Job.findOne({
+      where: { id },
+      include: [{ model: Users, as: 'jobOwner' }]
+    });
+    return job;
   }
 }

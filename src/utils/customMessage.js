@@ -26,5 +26,8 @@ const messages = {
   jobDuplication: 'You can not create the same project twice',
   allJobs: 'all jobs',
   invalidJobStatus: 'Please provide a valid job status value',
+  jobDetails: 'Job details',
+  invalidId: 'Please provide a valid id',
+  jobNotFound: 'Job not Found',
 };
 export default messages;
