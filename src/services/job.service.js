@@ -1,6 +1,6 @@
 import models from '../database/models/index';
 
-const { Job } = models;
+const { Job, Users } = models;
 
 /**
  * @description this service deals with the Job model
@@ -32,7 +32,10 @@ export default class JobService {
  * @returns {object} it returns the job based on a particular status
  */
   static async getAllJobsByStatus(status) {
-    const jobs = await Job.findAll({ where: { status } });
+    const jobs = await Job.findAll({
+      where: { status },
+      include: [{ model: Users, as: 'jobOwner' }]
+    });
     return jobs;
   }
 }

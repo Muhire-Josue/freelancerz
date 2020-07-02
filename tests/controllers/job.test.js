@@ -16,6 +16,8 @@ const {
   invalidToken,
   invalidEndDate,
   invalidStartDate,
+  allJobs,
+  invalidJobStatus,
 } = customMessages;
 const {
   created,
@@ -155,6 +157,48 @@ describe('Job tests', () => {
         expect(res.status).to.equal(badRequest);
         expect(error);
         expect(error).to.equal(invalidEndDate);
+        done();
+      });
+  });
+
+  it('should get all open jobs', (done) => {
+    chai
+      .request(server)
+      .get('/api/jobs?status=open')
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { data, message } = res.body;
+        expect(res.status).to.equal(ok);
+        expect(message);
+        expect(message).to.equal(allJobs);
+        expect(data);
+        expect(data).to.be.an('array');
+        done();
+      });
+  });
+  it('should not get all open jobs if status is not provided', (done) => {
+    chai
+      .request(server)
+      .get('/api/jobs')
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { error } = res.body;
+        expect(res.status).to.equal(badRequest);
+        expect(error);
+        expect(error).to.equal(invalidJobStatus);
+        done();
+      });
+  });
+  it('should not get all open jobs if status is invalid', (done) => {
+    chai
+      .request(server)
+      .get('/api/jobs?status=invalid')
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { error } = res.body;
+        expect(res.status).to.equal(badRequest);
+        expect(error);
+        expect(error).to.equal(invalidJobStatus);
         done();
       });
   });

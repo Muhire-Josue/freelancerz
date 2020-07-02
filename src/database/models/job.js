@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   Job.associate = (models) => {
     // associations can be defined here
     Job.belongsTo(models.Users, {
-      as: 'Job',
+      as: 'jobOwner',
       foreignKey: 'clientId',
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'

@@ -7,7 +7,7 @@ import customMessage from '../utils/customMessage';
 const { badRequest } = statusCode;
 const { getJobByClientId } = JobService;
 const { errorResponse } = responseHandler;
-const { invalidStartDate, invalidEndDate } = customMessage;
+const { invalidStartDate, invalidEndDate, invalidJobStatus } = customMessage;
 
 /** *
  * @description validates the job object for createJob endpoint
@@ -75,9 +75,29 @@ const endDateValidation = (req, res, next) => {
   return next();
 };
 
+/**
+ * @description validates job status passed in the URL
+ * @param {request} req
+ * @param {response} res
+ * @param {function} next
+ * @returns {object} it returns an error if the status is not provided or it's invalid
+ */
+const validateJobStatus = (req, res, next) => {
+  const { status } = req.query;
+  const validStatuses = ['open', 'closed', 'suspended'];
+  if (!status) {
+    return errorResponse(res, badRequest, invalidJobStatus);
+  }
+  if (!validStatuses.includes(status)) {
+    return errorResponse(res, badRequest, invalidJobStatus);
+  }
+  return next();
+};
+
 export default {
   validateJobObj,
   startDatesValidation,
-  endDateValidation
+  endDateValidation,
+  validateJobStatus
   // jobDuplication
 };

@@ -4,7 +4,7 @@ import statusCode from '../utils/statusCodes';
 import responseHandler from '../utils/responseHandler.util';
 
 const { saveJob, getAllJobsByStatus } = JobService;
-const { postJob } = customMessages;
+const { postJob, allJobs } = customMessages;
 const { created, ok } = statusCode;
 const { successResponse } = responseHandler;
 
@@ -35,6 +35,6 @@ export default class JobController {
   static async allOpenJobs(req, res) {
     const { status } = req.query;
     const jobs = await getAllJobsByStatus(status);
-    return successResponse(res, ok, 'all jobs', undefined, jobs);
+    return successResponse(res, ok, allJobs, undefined, jobs);
   }
 }
