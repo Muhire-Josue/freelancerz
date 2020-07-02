@@ -1,0 +1,83 @@
+import jobValidationSchema from '../validations/job.validation';
+import statusCode from '../utils/statusCodes';
+import responseHandler from '../utils/responseHandler.util';
+import JobService from '../services/job.service';
+import customMessage from '../utils/customMessage';
+
+const { badRequest } = statusCode;
+const { getJobByClientId } = JobService;
+const { errorResponse } = responseHandler;
+const { invalidStartDate, invalidEndDate } = customMessage;
+
+/** *
+ * @description validates the job object for createJob endpoint
+ * @param {request} req
+ * @param {response} res
+ * @param {function} next
+ * @returns {object} returns an error object, if formData is invalid
+ */
+const validateJobObj = (req, res, next) => {
+  const {
+    title, price, yearsOfExperience, jobType, startDate, endDate, description
+  } = req.body;
+  const validateObj = jobValidationSchema.validate({
+    title, price, yearsOfExperience, jobType, startDate, endDate, description
+  });
+
+  if (validateObj.error) {
+    return errorResponse(res, badRequest, validateObj.error.details[0].message);
+  }
+  return next();
+};
+// const jobDuplication = async (req, res, next) => {
+//   const { description } = req.body;
+//   const clientId = req.authUser.id;
+//   const job = await getJobByClientId(clientId);
+//   if (job.dataValues) {
+//     const descriptionExist = description.localeCompare(job.dataValues.description);
+//     return console.log('descriptionExist', descriptionExist);
+//   }
+//   return next();
+// };
+
+/** *
+ * @description validates the startDate property
+ * @param {request} req
+ * @param {response} res
+ * @param {function} next
+ * @returns {object} returns an error object
+ */
+const startDatesValidation = (req, res, next) => {
+  const { startDate } = req.body;
+  console.log(new Date().getFullYear() !== new Date(startDate).getFullYear());
+  if (new Date().getFullYear() !== new Date(startDate).getFullYear()) {
+    return errorResponse(res, badRequest, invalidStartDate);
+  }
+  if (Date.parse(startDate) < Date.parse(new Date())) {
+    return errorResponse(res, badRequest, invalidStartDate);
+  }
+  console.log(new Date().getFullYear() !== new Date(startDate).getFullYear());
+  return next();
+};
+
+/**
+ * @description this function validates the endDate property
+ * @param {request} req
+ * @param {response} res
+ * @param {function} next
+ * @returns {object} it returns an error message if the end date is invalid
+ */
+const endDateValidation = (req, res, next) => {
+  const { endDate, startDate } = req.body;
+  if (Date.parse(endDate) < Date.parse(startDate)) {
+    return errorResponse(res, badRequest, invalidEndDate);
+  }
+  return next();
+};
+
+export default {
+  validateJobObj,
+  startDatesValidation,
+  endDateValidation
+  // jobDuplication
+};

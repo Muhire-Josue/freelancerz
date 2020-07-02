@@ -25,15 +25,30 @@ const {
   ok
 } = statusCodes;
 const {
-  user1, user2, loginUser1, invalidLogin, invalidLogin2, invalidLogin3, loginUser4
+  user1, clientSignup, user2, loginUser1, invalidLogin, invalidLogin2, invalidLogin3, loginUser4
 } = userMock;
 
-describe('User sign up', () => {
-  it('Should should create a user', (done) => {
+describe('User test', () => {
+  it('Should should create a developer', (done) => {
     chai
       .request(server)
-      .post('/api/user/auth/signup')
+      .post('/api/auth/signup')
       .send(user1)
+      .end((err, res) => {
+        const { token, message } = res.body;
+        expect(res.status).to.equal(created);
+        expect(message);
+        expect(message).to.equal(userCreated);
+        expect(token);
+        expect(token).to.be.a('string');
+        done();
+      });
+  });
+  it('Should should create a client', (done) => {
+    chai
+      .request(server)
+      .post('/api/auth/signup')
+      .send(clientSignup)
       .end((err, res) => {
         const { token, message } = res.body;
         expect(res.status).to.equal(created);
@@ -47,7 +62,7 @@ describe('User sign up', () => {
   it('Should should not duplicate a user', (done) => {
     chai
       .request(server)
-      .post('/api/user/auth/signup')
+      .post('/api/auth/signup')
       .send(user1)
       .end((err, res) => {
         const { error } = res.body;
@@ -61,7 +76,7 @@ describe('User sign up', () => {
   it('Should should not create user with invalid data', (done) => {
     chai
       .request(server)
-      .post('/api/user/auth/signup')
+      .post('/api/auth/signup')
       .send(user2)
       .end((err, res) => {
         const { error } = res.body;
@@ -75,7 +90,7 @@ describe('User sign up', () => {
   it('Should should login a user', (done) => {
     chai
       .request(server)
-      .post('/api/user/auth/login')
+      .post('/api/auth/login')
       .send(loginUser1)
       .end((err, res) => {
         const { token, message } = res.body;
@@ -91,7 +106,7 @@ describe('User sign up', () => {
   it('Should should not login when a user is not found in db', (done) => {
     chai
       .request(server)
-      .post('/api/user/auth/login')
+      .post('/api/auth/login')
       .send(invalidLogin)
       .end((err, res) => {
         const { error } = res.body;
@@ -105,7 +120,7 @@ describe('User sign up', () => {
   it('Should not login when the password is incorrect', (done) => {
     chai
       .request(server)
-      .post('/api/user/auth/login')
+      .post('/api/auth/login')
       .send(invalidLogin2)
       .end((err, res) => {
         const { error } = res.body;
@@ -119,7 +134,7 @@ describe('User sign up', () => {
   it('Should not login with invalid data', (done) => {
     chai
       .request(server)
-      .post('/api/user/auth/login')
+      .post('/api/auth/login')
       .send(invalidLogin3)
       .end((err, res) => {
         const { error } = res.body;
@@ -133,7 +148,7 @@ describe('User sign up', () => {
   it('Should not login when the account is pending', (done) => {
     chai
       .request(server)
-      .post('/api/user/auth/login')
+      .post('/api/auth/login')
       .send(loginUser4)
       .end((err, res) => {
         const { error } = res.body;

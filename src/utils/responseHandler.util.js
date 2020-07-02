@@ -7,9 +7,10 @@
  * @returns {object} response
  * @description Returns a successful response
  */
-const successResponse = (res, code, message, token) => res.status(code).json({
+const successResponse = (res, code, message, token, data = null) => res.status(code).json({
   message,
   token,
+  data
 });
 
 /**
