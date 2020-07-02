@@ -23,6 +23,8 @@ const messages = {
   invalidStartDate: 'Please provide valid start date',
   invalidEndDate: 'Please provide valid end date',
   invalidJobDescription: 'Please provide valid Job description',
-  jobDuplication: 'You can not create the same project twice'
+  jobDuplication: 'You can not create the same project twice',
+  allJobs: 'all jobs',
+  invalidJobStatus: 'Please provide a valid job status value',
 };
 export default messages;
