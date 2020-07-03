@@ -4,10 +4,16 @@ import responseHandler from '../utils/responseHandler.util';
 import JobService from '../services/job.service';
 import customMessage from '../utils/customMessage';
 
-const { badRequest } = statusCode;
-const { getJobByClientId } = JobService;
+const { badRequest, notFound } = statusCode;
+const { getJobByClientId, getJobById } = JobService;
 const { errorResponse } = responseHandler;
-const { invalidStartDate, invalidEndDate, invalidJobStatus } = customMessage;
+const {
+  invalidStartDate,
+  invalidEndDate,
+  invalidJobStatus,
+  invalidId,
+  jobNotFound,
+} = customMessage;
 
 /** *
  * @description validates the job object for createJob endpoint
@@ -94,10 +100,43 @@ const validateJobStatus = (req, res, next) => {
   return next();
 };
 
+/**
+ * @description checks if the id is not a number
+ * @param {request} req
+ * @param {response} res
+ * @param {function} next
+ * @returns {object} it returns an error message if the id passed in the URL is not a number
+ */
+const validateId = (req, res, next) => {
+  const { id } = req.query;
+  if ((Number.isNaN(parseInt(id, 10)))) {
+    return errorResponse(res, badRequest, invalidId);
+  }
+  return next();
+};
+
+/**
+ * @description check a job of the given id exist
+ * @param {request} req
+ * @param {response} res
+ * @param {function} next
+ * @returns {object} returns an error message if no job of the given id was found
+ */
+const jobExist = async (req, res, next) => {
+  const { id } = req.query;
+  const job = await getJobById(id);
+  if (!job) {
+    return errorResponse(res, notFound, jobNotFound);
+  }
+  return next();
+};
+
 export default {
   validateJobObj,
   startDatesValidation,
   endDateValidation,
-  validateJobStatus
+  validateJobStatus,
+  validateId,
+  jobExist,
   // jobDuplication
 };

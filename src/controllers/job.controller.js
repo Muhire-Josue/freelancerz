@@ -3,8 +3,8 @@ import customMessages from '../utils/customMessage';
 import statusCode from '../utils/statusCodes';
 import responseHandler from '../utils/responseHandler.util';
 
-const { saveJob, getAllJobsByStatus } = JobService;
-const { postJob, allJobs } = customMessages;
+const { saveJob, getAllJobsByStatus, getJobById } = JobService;
+const { postJob, allJobs, jobDetails } = customMessages;
 const { created, ok } = statusCode;
 const { successResponse } = responseHandler;
 
@@ -36,5 +36,17 @@ export default class JobController {
     const { status } = req.query;
     const jobs = await getAllJobsByStatus(status);
     return successResponse(res, ok, allJobs, undefined, jobs);
+  }
+
+  /**
+   * @param {request} req
+   * @param {response} res
+   * @returns {object} it returns all open/available jobs
+   */
+  static async viewJob(req, res) {
+    const { id } = req.query;
+    const jobId = parseInt(id, 10);
+    const job = await getJobById(jobId);
+    return successResponse(res, ok, jobDetails, undefined, job.dataValues);
   }
 }

@@ -18,6 +18,9 @@ const {
   invalidStartDate,
   allJobs,
   invalidJobStatus,
+  jobDetails,
+  invalidId,
+  jobNotFound,
 } = customMessages;
 const {
   created,
@@ -33,6 +36,7 @@ const {
   job2,
 } = userMock;
 let clientToken;
+let jobId;
 
 
 const { startDate } = job1;
@@ -70,6 +74,7 @@ describe('Job tests', () => {
       .set('Authorization', `Bearer ${clientToken}`)
       .end((err, res) => {
         const { data, message } = res.body;
+        jobId = data.id;
         expect(res.status).to.equal(created);
         expect(message);
         expect(message).to.equal(postJob);
@@ -199,6 +204,49 @@ describe('Job tests', () => {
         expect(res.status).to.equal(badRequest);
         expect(error);
         expect(error).to.equal(invalidJobStatus);
+        done();
+      });
+  });
+
+  it('should get the details of a specific job', (done) => {
+    chai
+      .request(server)
+      .get(`/api/job?id=${jobId}`)
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { data, message } = res.body;
+        expect(res.status).to.equal(ok);
+        expect(message);
+        expect(message).to.equal(jobDetails);
+        expect(data);
+        expect(data).to.be.an('object');
+        done();
+      });
+  });
+
+  it('should not get the details of a specific job with invalid id', (done) => {
+    chai
+      .request(server)
+      .get('/api/job?id=invalid')
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { error } = res.body;
+        expect(res.status).to.equal(badRequest);
+        expect(error);
+        expect(error).to.equal(invalidId);
+        done();
+      });
+  });
+  it('should not get the details of a specific if job is not found', (done) => {
+    chai
+      .request(server)
+      .get('/api/job?id=0')
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { error } = res.body;
+        expect(res.status).to.equal(notFound);
+        expect(error);
+        expect(error).to.equal(jobNotFound);
         done();
       });
   });
