@@ -20,6 +20,7 @@ export default class JobController {
      */
   static async createJob(req, res) {
     const newJob = req.body;
+    // return console.log('req.body ===>', req.body);
     newJob.status = 'open';
     newJob.clientId = req.authUser.id;
     const { dataValues } = await saveJob(newJob);

@@ -41,7 +41,6 @@ const validateJobObj = (req, res, next) => {
 //   const job = await getJobByClientId(clientId);
 //   if (job.dataValues) {
 //     const descriptionExist = description.localeCompare(job.dataValues.description);
-//     return console.log('descriptionExist', descriptionExist);
 //   }
 //   return next();
 // };
@@ -55,14 +54,12 @@ const validateJobObj = (req, res, next) => {
  */
 const startDatesValidation = (req, res, next) => {
   const { startDate } = req.body;
-  console.log(new Date().getFullYear() !== new Date(startDate).getFullYear());
   if (new Date().getFullYear() !== new Date(startDate).getFullYear()) {
     return errorResponse(res, badRequest, invalidStartDate);
   }
   if (Date.parse(startDate) < Date.parse(new Date())) {
     return errorResponse(res, badRequest, invalidStartDate);
   }
-  console.log(new Date().getFullYear() !== new Date(startDate).getFullYear());
   return next();
 };
 

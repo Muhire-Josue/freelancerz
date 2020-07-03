@@ -2,6 +2,7 @@ import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../../index';
 import userMock from '../data/user.mock';
+import jobMock from '../data/job.mock';
 import customMessages from '../../src/utils/customMessage';
 import statusCodes from '../../src/utils/statusCodes';
 
@@ -31,10 +32,12 @@ const {
   ok
 } = statusCodes;
 const {
-  job1,
   clientLogin,
-  job2,
 } = userMock;
+const {
+  job1,
+  job2,
+} = jobMock;
 let clientToken;
 let jobId;
 
