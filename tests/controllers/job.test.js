@@ -172,7 +172,7 @@ describe('Job tests', () => {
   it('should get all open jobs', (done) => {
     chai
       .request(server)
-      .get('/api/jobs?status=open')
+      .get('/api/jobs?status=opened')
       .set('Authorization', `Bearer ${clientToken}`)
       .end((err, res) => {
         const { data, message } = res.body;

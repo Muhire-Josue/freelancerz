@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import { async } from 'regenerator-runtime';
 import signupValidationSchema from '../validations/signup.validation';
 import loginValidationSchema from '../validations/login.validation';
 import handleResponse from '../utils/responseHandler.util';

@@ -1,12 +1,23 @@
 import JobService from '../services/job.service';
+import StackService from '../services/stack.service';
 import customMessages from '../utils/customMessage';
 import statusCode from '../utils/statusCodes';
 import responseHandler from '../utils/responseHandler.util';
 
-const { saveJob, getAllJobsByStatus, getJobById } = JobService;
-const { postJob, allJobs, jobDetails } = customMessages;
+const {
+  saveJob,
+  getJobByStatusOrById,
+  updateJob: update
+} = JobService;
+const { saveStack } = StackService;
+const {
+  postJob,
+  allJobs,
+  jobDetails,
+  jobUpdated
+} = customMessages;
 const { created, ok } = statusCode;
-const { successResponse } = responseHandler;
+const { successResponse, updatedResponse } = responseHandler;
 
 /**
  * @description this controller works with everything regarding jobs
@@ -20,9 +31,14 @@ export default class JobController {
      */
   static async createJob(req, res) {
     const newJob = req.body;
-    // return console.log('req.body ===>', req.body);
-    newJob.status = 'open';
+    const stack = {};
+    let newStack;
+    newJob.status = 'opened';
     newJob.clientId = req.authUser.id;
+    stack.tech = newJob.tag;
+    newStack = await saveStack(stack);
+    newStack = newStack.dataValues;
+    newJob.stackId = newStack.id;
     const { dataValues } = await saveJob(newJob);
     const job = dataValues;
     return successResponse(res, created, postJob, undefined, job);
@@ -35,19 +51,46 @@ export default class JobController {
    */
   static async allOpenJobs(req, res) {
     const { status } = req.query;
-    const jobs = await getAllJobsByStatus(status);
+    const jobs = await getJobByStatusOrById(status);
     return successResponse(res, ok, allJobs, undefined, jobs);
   }
 
   /**
    * @param {request} req
    * @param {response} res
-   * @returns {object} it returns all open/available jobs
+   * @returns {object} it returns a job
    */
   static async viewJob(req, res) {
     const { id } = req.query;
     const jobId = parseInt(id, 10);
-    const job = await getJobById(jobId);
+    const job = await getJobByStatusOrById(jobId);
     return successResponse(res, ok, jobDetails, undefined, job.dataValues);
+  }
+
+  /**
+   * @description change the status of a job (open, closed, suspended)
+   * @param {request} req
+   * @param {response} res
+   * @returns {object} it returns a message saying the job status has been updated
+   */
+  static async updateJobStatus(req, res) {
+    const { id, status } = req.query;
+    const jobId = parseInt(id, 10);
+    await update(jobId, status);
+    return updatedResponse(res, ok, jobUpdated);
+  }
+
+  /**
+   * @description update a job
+   * @param {request} req
+   * @param {response} res
+   * @returns {object} it returns a message saying the job has been updated
+   */
+  static async updateJob(req, res) {
+    const job = req.body;
+    const { id } = req.query;
+    const jobId = parseInt(id, 10);
+    await update(jobId, job);
+    return updatedResponse(res, ok, jobUpdated);
   }
 }

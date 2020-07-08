@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE,
     description: DataTypes.STRING,
-    clientId: DataTypes.INTEGER
+    clientId: DataTypes.INTEGER,
+    stackId: DataTypes.INTEGER
   }, {});
   Job.associate = (models) => {
     // associations can be defined here
@@ -17,6 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'clientId',
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
+    });
+    Job.hasMany(models.Stack, {
+      as: 'job',
+      foreignKey: 'stackId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
   };
   return Job;
