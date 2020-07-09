@@ -16,6 +16,8 @@
       "consistent-return": 0,
       "no-param-reassign": 0,
       "comma-dangle": 0,
+      "no-plusplus":"off",
+      "arrow-parens":"off",
       "curly": [
         "error",
         "multi-line"

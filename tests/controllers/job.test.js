@@ -46,7 +46,7 @@ const { startDate } = job1;
 const month = new Date(startDate).getMonth() - 1;
 const day = new Date(startDate).getDay();
 const year = new Date(startDate).getFullYear();
-const prevDate = `${month}-${day}-${year}`;
+const prevDate = `${month}-${day + 1}-${year}`;
 
 const prevMonth = new Date().getMonth() - 1;
 const someDate = `${prevMonth}-${new Date().getDay()}-${new Date().getFullYear()}`;
@@ -214,7 +214,8 @@ describe('Job tests', () => {
   it('should get the details of a specific job', (done) => {
     chai
       .request(server)
-      .get(`/api/job?id=${jobId}`)
+      .post('/api/job/view')
+      .send({ id: jobId })
       .set('Authorization', `Bearer ${clientToken}`)
       .end((err, res) => {
         const { data, message } = res.body;
@@ -230,7 +231,8 @@ describe('Job tests', () => {
   it('should not get the details of a specific job with invalid id', (done) => {
     chai
       .request(server)
-      .get('/api/job?id=invalid')
+      .post('/api/job/view')
+      .send({ id: 'invalid' })
       .set('Authorization', `Bearer ${clientToken}`)
       .end((err, res) => {
         const { error } = res.body;
@@ -243,7 +245,8 @@ describe('Job tests', () => {
   it('should not get the details of a specific if job is not found', (done) => {
     chai
       .request(server)
-      .get('/api/job?id=0')
+      .post('/api/job/view')
+      .send({ id: 0 })
       .set('Authorization', `Bearer ${clientToken}`)
       .end((err, res) => {
         const { error } = res.body;

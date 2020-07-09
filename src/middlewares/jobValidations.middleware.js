@@ -4,8 +4,13 @@ import responseHandler from '../utils/responseHandler.util';
 import JobService from '../services/job.service';
 import customMessage from '../utils/customMessage';
 
-const { badRequest, notFound, conflict } = statusCode;
-const { getJobByClientId, getJobByStatusOrById } = JobService;
+const {
+  badRequest,
+  notFound,
+  conflict,
+  forbidden
+} = statusCode;
+const { getJobByStatusOrById } = JobService;
 const { errorResponse } = responseHandler;
 const {
   invalidStartDate,
@@ -14,6 +19,7 @@ const {
   invalidId,
   jobNotFound,
   duplicateStatus,
+  jobNotOpened,
 } = customMessage;
 
 /** *
@@ -106,7 +112,7 @@ const validateJobStatus = (req, res, next) => {
  * @returns {object} it returns an error message if the id passed in the URL is not a number
  */
 const validateId = (req, res, next) => {
-  const { id } = req.query;
+  const { id } = req.body;
   if ((Number.isNaN(parseInt(id, 10)))) {
     return errorResponse(res, badRequest, invalidId);
   }
@@ -121,7 +127,7 @@ const validateId = (req, res, next) => {
  * @returns {object} returns an error message if no job of the given id was found
  */
 const jobExist = async (req, res, next) => {
-  const { id } = req.query;
+  const { id } = req.body;
   const job = await getJobByStatusOrById(id);
   if (!job) {
     return errorResponse(res, notFound, jobNotFound);
@@ -137,11 +143,30 @@ const jobExist = async (req, res, next) => {
  * @returns {object} returns an error message if a job already has the given status
  */
 const duplicateJobStatus = async (req, res, next) => {
-  const { id, status } = req.query;
+  const { status } = req.query;
+  const { id } = req.body;
   const jobId = parseInt(id, 10);
   const { dataValues } = await getJobByStatusOrById(jobId);
   if (dataValues.status === status) {
     return errorResponse(res, conflict, duplicateStatus);
+  }
+  return next();
+};
+
+/**
+ * @description checks if the status of a job is open
+  * @param {request} req
+ * @param {response} res
+ * @param {function} next
+ * @returns {object} error message if the status is not open
+ */
+
+const jobIsOpen = async (req, res, next) => {
+  const { id } = req.body;
+  const jobId = parseInt(id, 10);
+  const { dataValues } = await getJobByStatusOrById(jobId);
+  if (dataValues.status !== 'opened') {
+    return errorResponse(res, forbidden, jobNotOpened);
   }
   return next();
 };
@@ -154,5 +179,6 @@ export default {
   validateId,
   jobExist,
   duplicateJobStatus,
+  jobIsOpen,
   // jobDuplication
 };

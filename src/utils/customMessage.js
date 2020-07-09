@@ -31,5 +31,9 @@ const messages = {
   jobNotFound: 'Job not Found',
   jobUpdated: 'Job updated',
   duplicateStatus: 'This Job already has that status',
+  appliedSuccessfully: 'Applied successfully',
+  notDeveloper: 'Only developers can apply for jobs',
+  jobNotOpened: 'This job is not available',
+  duplicateApplication: 'Application already exist',
 };
 export default messages;

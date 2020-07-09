@@ -61,7 +61,7 @@ export default class JobController {
    * @returns {object} it returns a job
    */
   static async viewJob(req, res) {
-    const { id } = req.query;
+    const { id } = req.body;
     const jobId = parseInt(id, 10);
     const job = await getJobByStatusOrById(jobId);
     return successResponse(res, ok, jobDetails, undefined, job.dataValues);
@@ -74,7 +74,8 @@ export default class JobController {
    * @returns {object} it returns a message saying the job status has been updated
    */
   static async updateJobStatus(req, res) {
-    const { id, status } = req.query;
+    const { status } = req.query;
+    const { id } = req.body;
     const jobId = parseInt(id, 10);
     await update(jobId, status);
     return updatedResponse(res, ok, jobUpdated);
@@ -88,7 +89,7 @@ export default class JobController {
    */
   static async updateJob(req, res) {
     const job = req.body;
-    const { id } = req.query;
+    const { id } = req.body;
     const jobId = parseInt(id, 10);
     await update(jobId, job);
     return updatedResponse(res, ok, jobUpdated);

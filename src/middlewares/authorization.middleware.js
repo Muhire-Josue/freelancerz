@@ -18,7 +18,7 @@ const { unauthorizedAccess } = customMessage;
  */
 
 const authorization = async (req, res, next) => {
-  const { id } = req.query;
+  const { id } = req.body;
   const jobId = parseInt(id, 10);
   const currentUser = req.authUser;
   const { dataValues } = await getJobByStatusOrById(jobId);

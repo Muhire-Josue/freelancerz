@@ -19,9 +19,15 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     });
-    Job.hasMany(models.Stack, {
-      as: 'job',
+    Job.belongsTo(models.Stack, {
+      as: 'requiredTech',
       foreignKey: 'stackId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    });
+    Job.hasMany(models.JobApplications, {
+      as: 'job',
+      foreignKey: 'jobId',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     });

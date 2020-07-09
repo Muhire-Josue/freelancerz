@@ -43,6 +43,7 @@ npm test
 | `api/jobs` | POST | Create Job |
 | `api/jobs?status=open` | GET | Get all available jobs |
 | `api/job?id=1` | GET | Get details of a job |
+| `api/job/apply` | POST | Apply for a job |
 ### How can it be manually tested
 - using [postman](https://www.getpostman.com/downloads/)
 ### Pivotal tracker stories
