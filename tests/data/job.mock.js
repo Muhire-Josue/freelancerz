@@ -16,4 +16,13 @@ export default {
   job2: {
     title: 'Web development',
   },
+  job3: {
+    title: 'Web development',
+    price: 1000000,
+    yearsOfExperience: '2',
+    jobType: 'full-time',
+    startDate: someDate,
+    endDate: someDate2,
+    description: 'this is an ecommerce website'
+  },
 };

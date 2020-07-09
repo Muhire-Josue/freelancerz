@@ -4,8 +4,8 @@ import responseHandler from '../utils/responseHandler.util';
 import JobService from '../services/job.service';
 import customMessage from '../utils/customMessage';
 
-const { badRequest, notFound } = statusCode;
-const { getJobByClientId, getJobById } = JobService;
+const { badRequest, notFound, conflict } = statusCode;
+const { getJobByClientId, getJobByStatusOrById } = JobService;
 const { errorResponse } = responseHandler;
 const {
   invalidStartDate,
@@ -13,6 +13,7 @@ const {
   invalidJobStatus,
   invalidId,
   jobNotFound,
+  duplicateStatus,
 } = customMessage;
 
 /** *
@@ -87,7 +88,7 @@ const endDateValidation = (req, res, next) => {
  */
 const validateJobStatus = (req, res, next) => {
   const { status } = req.query;
-  const validStatuses = ['open', 'closed', 'suspended'];
+  const validStatuses = ['opened', 'closed', 'suspended'];
   if (!status) {
     return errorResponse(res, badRequest, invalidJobStatus);
   }
@@ -121,9 +122,26 @@ const validateId = (req, res, next) => {
  */
 const jobExist = async (req, res, next) => {
   const { id } = req.query;
-  const job = await getJobById(id);
+  const job = await getJobByStatusOrById(id);
   if (!job) {
     return errorResponse(res, notFound, jobNotFound);
+  }
+  return next();
+};
+
+/**
+ * @description check if a job has that status already
+ * @param {request} req
+ * @param {response} res
+ * @param {function} next
+ * @returns {object} returns an error message if a job already has the given status
+ */
+const duplicateJobStatus = async (req, res, next) => {
+  const { id, status } = req.query;
+  const jobId = parseInt(id, 10);
+  const { dataValues } = await getJobByStatusOrById(jobId);
+  if (dataValues.status === status) {
+    return errorResponse(res, conflict, duplicateStatus);
   }
   return next();
 };
@@ -135,5 +153,6 @@ export default {
   validateJobStatus,
   validateId,
   jobExist,
+  duplicateJobStatus,
   // jobDuplication
 };

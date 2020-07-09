@@ -33,6 +33,9 @@ module.exports = {
     clientId: {
       type: Sequelize.INTEGER
     },
+    stackId: {
+      type: Sequelize.INTEGER
+    },
     createdAt: {
       allowNull: false,
       type: Sequelize.DATE

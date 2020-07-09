@@ -24,7 +24,20 @@ const errorResponse = (res, code, error) => res.status(code).json({
   error,
 });
 
+/**
+ * @param {object} res
+ * @param {integer} code
+ * @param {string} message
+ * @param {string} token
+ * @returns {object} response
+ * @description Returns a successful response
+ */
+const updatedResponse = async (res, code, message) => res.status(code).json({
+  message
+});
+
 export default {
   successResponse,
   errorResponse,
+  updatedResponse,
 };

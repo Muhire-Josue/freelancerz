@@ -29,5 +29,7 @@ const messages = {
   jobDetails: 'Job details',
   invalidId: 'Please provide a valid id',
   jobNotFound: 'Job not Found',
+  jobUpdated: 'Job updated',
+  duplicateStatus: 'This Job already has that status',
 };
 export default messages;
