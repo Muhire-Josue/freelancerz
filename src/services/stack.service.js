@@ -15,4 +15,16 @@ export default class StackService {
     const data = await Stack.create(stack);
     return data;
   }
+
+  /**
+   * @description finds stack by id
+   * @param {integer} id
+   * @returns {object} the stack found
+   */
+  static async getStackById(id) {
+    const stack = await Stack.findOne({
+      where: { id }
+    });
+    return stack;
+  }
 }

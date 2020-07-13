@@ -24,6 +24,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     });
+    Users.hasMany(models.JobApplications, {
+      as: 'applicant',
+      foreignKey: 'applicantId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    });
   };
   return Users;
 };

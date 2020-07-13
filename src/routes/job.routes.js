@@ -24,7 +24,7 @@ const route = express.Router();
 
 route.post('/jobs', [tokenAuthentication, validateJobObj, startDatesValidation, endDateValidation], createJob);
 route.get('/jobs', [tokenAuthentication, validateJobStatus], allOpenJobs);
-route.get('/job', [tokenAuthentication, validateId, jobExist], viewJob);
+route.post('/job/view', [tokenAuthentication, validateId, jobExist], viewJob);
 route.put('/job', [tokenAuthentication, authorization, validateJobStatus, duplicateJobStatus, jobExist], updateJobStatus);
 route.put('/job/edit', [tokenAuthentication, authorization, validateJobObj, jobExist], updateJob);
 export default route;

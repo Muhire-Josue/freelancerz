@@ -35,24 +35,16 @@ export default class JobService {
     if (['opened', 'closed', 'suspended'].includes(data)) {
       const jobs = await Job.findAll({
         where: { status: data },
-        include: [{ model: Users, as: 'jobOwner' }]
+        include: [{ model: Users, as: 'jobOwner' }, { model: Stack, as: 'requiredTech' }]
       });
       return jobs;
     }
     const job = await Job.findOne({
       where: { id: data },
-      include: [{ model: Users, as: 'jobOwner' }]
+      include: [{ model: Users, as: 'jobOwner' }, { model: Stack, as: 'requiredTech' }]
     });
     return job;
   }
-
-  /**
-   * @description finds a job based on the job id
-   * @param {string} id
-   * @returns {object} it returns the job found
-   */
-  // static async getJobById(id) {
-  // }
 
   /**
    * @description update job

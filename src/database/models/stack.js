@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Stack.associate = (models) => {
     // associations can be defined here
-    Stack.belongsTo(models.Job, {
+    Stack.hasMany(models.Job, {
       as: 'stack',
       foreignKey: 'stackId',
       onUpdate: 'CASCADE',
