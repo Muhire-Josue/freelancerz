@@ -4,11 +4,19 @@ import statusCode from '../utils/statusCodes';
 import customMessage from '../utils/customMessage';
 import responseHandler from '../utils/responseHandler.util';
 
-const { saveApplication, updateApplicationStatus } = ApplicationService;
+const {
+  saveApplication,
+  updateApplicationStatus,
+  getAllApplicationsByApplicantIdOrJobId
+} = ApplicationService;
 const { getStackById } = StackService;
 
 const { ok } = statusCode;
-const { appliedSuccessfully, applicationApproved } = customMessage;
+const {
+  appliedSuccessfully,
+  applicationApproved,
+  allApplications,
+} = customMessage;
 const { successResponse, updatedResponse } = responseHandler;
 /**
  * @description this controller deals with job applications
@@ -43,5 +51,17 @@ export default class ApplicationController {
     const newStatus = 'approved';
     await updateApplicationStatus(jobId, userId, newStatus);
     return updatedResponse(res, ok, applicationApproved);
+  }
+
+  /**
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {array} it returns all applications for a specific job
+   */
+  static async allJobApplications(req, res) {
+    const { id } = req.body;
+    const jobId = parseInt(id, 10);
+    const applications = await getAllApplicationsByApplicantIdOrJobId(jobId, 'jobId');
+    return successResponse(res, ok, allApplications, undefined, applications);
   }
 }
