@@ -18,6 +18,8 @@ const {
   jobUpdated,
   jobNotOpened,
   duplicateApplication,
+  applicationApproved,
+  applicationNotFound,
 } = customMessages;
 const {
   created,
@@ -39,7 +41,8 @@ let clientToken;
 let developerToken;
 let jobId;
 let jobId2;
-
+const developerId = 1;
+const clientId = 2;
 
 describe('Application tests', () => {
   it('Should should login a client', (done) => {
@@ -185,6 +188,36 @@ describe('Application tests', () => {
         expect(res.status).to.equal(forbidden);
         expect(error);
         expect(error).to.equal(jobNotOpened);
+        expect(error).to.be.a('string');
+        done();
+      });
+  });
+  it('should approve an application', (done) => {
+    chai
+      .request(server)
+      .put('/api/job/apply/approve')
+      .send({ id: jobId, applicantId: developerId })
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { message } = res.body;
+        expect(res.status).to.equal(ok);
+        expect(message);
+        expect(message).to.equal(applicationApproved);
+        expect(message).to.be.a('string');
+        done();
+      });
+  });
+  it('should not approve if the application does not exist', (done) => {
+    chai
+      .request(server)
+      .put('/api/job/apply/approve')
+      .send({ id: jobId, applicantId: clientId })
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { error } = res.body;
+        expect(res.status).to.equal(notFound);
+        expect(error);
+        expect(error).to.equal(applicationNotFound);
         expect(error).to.be.a('string');
         done();
       });

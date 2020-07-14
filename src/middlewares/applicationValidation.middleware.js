@@ -4,9 +4,14 @@ import customMessage from '../utils/customMessage';
 import generateJobIdFromArray from '../utils/generateJobId';
 import ApplicationService from '../services/application.service';
 
-const { badRequest, conflict, forbidden } = statusCode;
+const {
+  badRequest,
+  conflict,
+  forbidden,
+  notFound
+} = statusCode;
 const { errorResponse } = responseHandler;
-const { notDeveloper, duplicateApplication } = customMessage;
+const { notDeveloper, duplicateApplication, applicationNotFound } = customMessage;
 const { getAllApplicationsByApplicantId } = ApplicationService;
 
 /**
@@ -42,7 +47,27 @@ const duplicateJobApplication = async (req, res, next) => {
   return next();
 };
 
+/**
+ * @description check if application exist
+ * @param {request} req
+ * @param {response} res
+ * @param {function} next
+ * @returns {object} if the user did not apply to that job then it returns error message
+ */
+const applicationExist = async (req, res, next) => {
+  const { applicantId, id } = req.body;
+  const userId = parseInt(applicantId, 10);
+  const jobId = parseInt(id, 10);
+  const applications = await getAllApplicationsByApplicantId(userId);
+  const jobIds = generateJobIdFromArray(applications);
+  if (!jobIds.includes(jobId)) {
+    return errorResponse(res, notFound, applicationNotFound);
+  }
+  return next();
+};
+
 export default {
   applicantIsDeveloper,
   duplicateJobApplication,
+  applicationExist,
 };

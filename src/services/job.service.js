@@ -21,10 +21,10 @@ export default class JobService {
  * @param {integer} clientId
  * @returns {object} it returns the job found
  */
-  static async getJobByClientId(clientId) {
-    const job = await Job.findAll({ where: { clientId } });
-    return job;
-  }
+  // static async getJobByClientId(clientId) {
+  //   const job = await Job.findAll({ where: { clientId } });
+  //   return job;
+  // }
 
   /**
  * @description finds all jobs with particular status

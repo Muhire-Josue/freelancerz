@@ -27,4 +27,19 @@ export default class JobService {
     });
     return applications;
   }
+
+  /**
+   * @description update the status of a job application
+   * @param {integer} jobId
+   * @param {integer} applicantId
+   * @param {string} newStatus
+   * @returns {null} nothing
+   */
+  static async updateApplicationStatus(jobId, applicantId, newStatus) {
+    const application = await JobApplications.update(
+      { status: newStatus },
+      { where: { jobId, applicantId } }
+    );
+    return application;
+  }
 }
