@@ -1,4 +1,3 @@
-import { Sequelize } from 'sequelize';
 import models from '../database/models';
 
 const { Users } = models;

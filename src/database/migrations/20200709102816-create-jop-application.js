@@ -4,13 +4,16 @@ module.exports = {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     jobId: {
       type: Sequelize.INTEGER
     },
     applicantId: {
       type: Sequelize.INTEGER
+    },
+    status: {
+      type: Sequelize.STRING
     },
     createdAt: {
       allowNull: false,

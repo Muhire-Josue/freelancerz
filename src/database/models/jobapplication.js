@@ -1,7 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
   const JobApplications = sequelize.define('JobApplications', {
     jobId: DataTypes.INTEGER,
-    applicantId: DataTypes.INTEGER
+    applicantId: DataTypes.INTEGER,
+    status: DataTypes.STRING,
   }, {});
   JobApplications.associate = (models) => {
     // associations can be defined here

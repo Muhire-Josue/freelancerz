@@ -35,5 +35,7 @@ const messages = {
   notDeveloper: 'Only developers can apply for jobs',
   jobNotOpened: 'This job is not available',
   duplicateApplication: 'Application already exist',
+  applicationApproved: 'Application approved successfully',
+  applicationNotFound: 'Application not Found',
 };
 export default messages;
