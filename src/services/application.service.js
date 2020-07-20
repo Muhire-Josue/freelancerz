@@ -52,4 +52,18 @@ export default class JobService {
     );
     return application;
   }
+
+  /**
+   * @description returns a job application based on jobId and applicantId
+   * @param {integer} jobId
+   * @param {integer} applicantId
+   * @returns {object} it returns the application
+   */
+  static async getApplicationByApplicantId(jobId, applicantId) {
+    const application = await JobApplications.findOne({
+      where: { jobId, applicantId },
+      include: [{ model: Users, as: 'users' }]
+    });
+    return application;
+  }
 }

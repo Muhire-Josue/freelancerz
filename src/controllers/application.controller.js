@@ -7,7 +7,8 @@ import responseHandler from '../utils/responseHandler.util';
 const {
   saveApplication,
   updateApplicationStatus,
-  getAllApplicationsByApplicantIdOrJobId
+  getAllApplicationsByApplicantIdOrJobId,
+  getApplicationByApplicantId,
 } = ApplicationService;
 const { getStackById } = StackService;
 
@@ -16,6 +17,7 @@ const {
   appliedSuccessfully,
   applicationApproved,
   allApplications,
+  applicationFound,
 } = customMessage;
 const { successResponse, updatedResponse } = responseHandler;
 /**
@@ -63,5 +65,16 @@ export default class ApplicationController {
     const jobId = parseInt(id, 10);
     const applications = await getAllApplicationsByApplicantIdOrJobId(jobId, 'jobId');
     return successResponse(res, ok, allApplications, undefined, applications);
+  }
+
+  /**
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {array} it returns all applications for a specific job
+   */
+  static async jobApplication(req, res) {
+    const { id, applicantId } = req.body;
+    const application = await getApplicationByApplicantId(id, applicantId);
+    return successResponse(res, ok, applicationFound, undefined, application);
   }
 }
