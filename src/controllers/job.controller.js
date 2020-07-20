@@ -7,14 +7,16 @@ import responseHandler from '../utils/responseHandler.util';
 const {
   saveJob,
   getJobByStatusOrById,
-  updateJob: update
+  updateJob: update,
+  deleteJobByJobId
 } = JobService;
 const { saveStack } = StackService;
 const {
   postJob,
   allJobs,
   jobDetails,
-  jobUpdated
+  jobUpdated,
+  jobDeleted,
 } = customMessages;
 const { created, ok } = statusCode;
 const { successResponse, updatedResponse } = responseHandler;
@@ -93,5 +95,18 @@ export default class JobController {
     const jobId = parseInt(id, 10);
     await update(jobId, job);
     return updatedResponse(res, ok, jobUpdated);
+  }
+
+  /**
+   * @description update a job
+   * @param {request} req
+   * @param {response} res
+   * @returns {object} it returns a message saying the job has been updated
+   */
+  static async deleteJob(req, res) {
+    const { id } = req.body;
+    const jobId = parseInt(id, 10);
+    await deleteJobByJobId(jobId);
+    return updatedResponse(res, ok, jobDeleted);
   }
 }

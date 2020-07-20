@@ -39,5 +39,6 @@ const messages = {
   applicationNotFound: 'Application not Found',
   allApplications: 'All applications for this job',
   applicationFound: 'Application found',
+  jobDeleted: 'Job deleted successfully',
 };
 export default messages;

@@ -17,6 +17,7 @@ const {
   jobUpdated,
   duplicateStatus,
   unauthorizedAccess,
+  jobDeleted,
 } = customMessages;
 const {
   created,
@@ -168,6 +169,21 @@ describe('Second Job tests', () => {
         expect(error);
         expect(error).to.equal(unauthorizedAccess);
         expect(error).to.be.a('string');
+        done();
+      });
+  });
+  it('should delete a job', (done) => {
+    chai
+      .request(server)
+      .delete('/api/job')
+      .send({ id: jobId })
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { message } = res.body;
+        expect(res.status).to.equal(ok);
+        expect(message);
+        expect(message).to.equal(jobDeleted);
+        expect(message).to.be.a('string');
         done();
       });
   });

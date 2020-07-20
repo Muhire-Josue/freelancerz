@@ -9,7 +9,8 @@ const {
   allOpenJobs,
   viewJob,
   updateJobStatus,
-  updateJob
+  updateJob,
+  deleteJob,
 } = JobController;
 const {
   validateJobObj,
@@ -27,4 +28,5 @@ route.get('/jobs', [tokenAuthentication, validateJobStatus], allOpenJobs);
 route.post('/job/view', [tokenAuthentication, validateId, jobExist], viewJob);
 route.put('/job', [tokenAuthentication, authorization, validateJobStatus, duplicateJobStatus, jobExist], updateJobStatus);
 route.put('/job/edit', [tokenAuthentication, authorization, validateJobObj, jobExist], updateJob);
+route.delete('/job', [tokenAuthentication, authorization, jobExist], deleteJob);
 export default route;
