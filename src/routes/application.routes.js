@@ -25,5 +25,5 @@ route.post('/job/apply', [
 ], applyJob);
 route.put('/job/apply/approve', [tokenAuthentication, validateId, applicationExist, authorization], approveJobApplication);
 route.put('/job/applications', [tokenAuthentication, validateId, jobExist, authorization], allJobApplications);
-route.put('/job/application', [tokenAuthentication, validateId, jobExist, authorization], jobApplication);
+route.put('/job/application', [tokenAuthentication, validateId, applicationExist, authorization], jobApplication);
 export default route;

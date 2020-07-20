@@ -44,6 +44,12 @@ npm test
 | `api/jobs?status=open` | GET | Get all available jobs |
 | `api/job?id=1` | GET | Get details of a job |
 | `api/job/apply` | POST | Apply for a job |
+| `/api/job?id=1&status=closed` | PUT | Update job Status |
+| `/api/job/edit` | PUT | Update a job |
+| `/api/job/apply/approve` | PUT | Approve an application |
+| `/api/job/applications` | PUT | View all applications |
+| `/api/job/application` | PUT | View an application |
+| `/api/job/` | DELETE | Delete a job |
 ### How can it be manually tested
 - using [postman](https://www.getpostman.com/downloads/)
 ### Pivotal tracker stories

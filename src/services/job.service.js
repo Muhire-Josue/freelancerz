@@ -65,4 +65,15 @@ export default class JobService {
       },
     });
   }
+
+  /**
+   * @description delete job
+   * @param {integer} id
+   * @return {object} null
+   */
+  static async deleteJobByJobId(id) {
+    await Job.destroy({
+      where: { id }
+    });
+  }
 }
