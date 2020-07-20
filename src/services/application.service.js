@@ -1,6 +1,6 @@
 import models from '../database/models/index';
 
-const { JobApplications } = models;
+const { JobApplications, Users } = models;
 
 /**
  * This service deals with job applications
@@ -18,12 +18,22 @@ export default class JobService {
 
   /**
    * @description get all applications of a developer
-   * @param {object} applicantId
+   * @param {integer} id
+   * @param {string} type
    * @returns {array} it returns all applications of a developer
    */
-  static async getAllApplicationsByApplicantId(applicantId) {
-    const applications = await JobApplications.findAll({
-      where: { applicantId }
+  static async getAllApplicationsByApplicantIdOrJobId(id, type) {
+    let applications;
+    if (type === 'applicantId') {
+      applications = await JobApplications.findAll({
+        where: { applicantId: id },
+        include: [{ model: Users, as: 'users' }]
+
+      });
+    }
+    applications = await JobApplications.findAll({
+      where: { jobId: id },
+      include: [{ model: Users, as: 'users' }]
     });
     return applications;
   }

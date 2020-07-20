@@ -12,7 +12,7 @@ const {
 } = statusCode;
 const { errorResponse } = responseHandler;
 const { notDeveloper, duplicateApplication, applicationNotFound } = customMessage;
-const { getAllApplicationsByApplicantId } = ApplicationService;
+const { getAllApplicationsByApplicantIdOrJobId } = ApplicationService;
 
 /**
  * @description check if applicant is a developer
@@ -39,7 +39,7 @@ const applicantIsDeveloper = (req, res, next) => {
 const duplicateJobApplication = async (req, res, next) => {
   const { id } = req.body;
   const developerId = req.authUser.id;
-  const jobs = await getAllApplicationsByApplicantId(developerId);
+  const jobs = await getAllApplicationsByApplicantIdOrJobId(developerId, 'applicantId');
   const jobIds = generateJobIdFromArray(jobs);
   if (jobIds.includes(id)) {
     return errorResponse(res, conflict, duplicateApplication);
@@ -58,7 +58,7 @@ const applicationExist = async (req, res, next) => {
   const { applicantId, id } = req.body;
   const userId = parseInt(applicantId, 10);
   const jobId = parseInt(id, 10);
-  const applications = await getAllApplicationsByApplicantId(userId);
+  const applications = await getAllApplicationsByApplicantIdOrJobId(userId, 'applicantId');
   const jobIds = generateJobIdFromArray(applications);
   if (!jobIds.includes(jobId)) {
     return errorResponse(res, notFound, applicationNotFound);

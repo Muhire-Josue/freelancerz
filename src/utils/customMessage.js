@@ -37,5 +37,6 @@ const messages = {
   duplicateApplication: 'Application already exist',
   applicationApproved: 'Application approved successfully',
   applicationNotFound: 'Application not Found',
+  allApplications: 'All applications for this job',
 };
 export default messages;

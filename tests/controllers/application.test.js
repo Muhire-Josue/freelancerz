@@ -20,6 +20,7 @@ const {
   duplicateApplication,
   applicationApproved,
   applicationNotFound,
+  allApplications,
 } = customMessages;
 const {
   created,
@@ -219,6 +220,23 @@ describe('Application tests', () => {
         expect(error);
         expect(error).to.equal(applicationNotFound);
         expect(error).to.be.a('string');
+        done();
+      });
+  });
+  it('should view all applications for a job', (done) => {
+    chai
+      .request(server)
+      .put('/api/job/applications')
+      .send({ id: jobId })
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { data, message } = res.body;
+        jobId2 = data.id;
+        expect(res.status).to.equal(ok);
+        expect(message);
+        expect(message).to.equal(allApplications);
+        expect(data);
+        expect(data).to.be.an('array');
         done();
       });
   });
