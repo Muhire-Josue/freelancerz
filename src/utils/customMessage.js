@@ -38,5 +38,6 @@ const messages = {
   applicationApproved: 'Application approved successfully',
   applicationNotFound: 'Application not Found',
   allApplications: 'All applications for this job',
+  applicationFound: 'Application found',
 };
 export default messages;
