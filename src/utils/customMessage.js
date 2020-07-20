@@ -40,5 +40,6 @@ const messages = {
   allApplications: 'All applications for this job',
   applicationFound: 'Application found',
   jobDeleted: 'Job deleted successfully',
+  notificationStatusUpdated: 'Notification status updated successfully'
 };
 export default messages;

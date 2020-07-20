@@ -18,11 +18,29 @@ export default class UserServices {
 
   /**
  * @description finds a user in the db by email
- * @param {string} email the email of a user
+ * @param {string} value the email of a user
  * @returns {object} it returns an object if found
  */
-  static async getUserByEmail(email) {
-    const user = Users.findOne({ where: { email } });
+  static async getUserByEmailOrById(value) {
+    let user;
+    if (typeof value === 'string') {
+      user = Users.findOne({ where: { email: value } });
+      return user;
+    }
+    user = Users.findOne({ where: { id: value } });
     return user;
+  }
+
+  /**
+   * @description changes value of getEmailNotification
+   * @param {string} email
+   * @param {boolean} status
+   * @returns {object} null
+   */
+  static async changeEmailNotificationStatus(email, status) {
+    await Users.update(
+      { getEmailNotification: status },
+      { where: { email } }
+    );
   }
 }

@@ -58,7 +58,7 @@ const applicationExist = async (req, res, next) => {
   const { applicantId, id } = req.body;
   const userId = parseInt(applicantId, 10);
   const jobId = parseInt(id, 10);
-  const applications = await getAllApplicationsByApplicantIdOrJobId(userId, 'applicantId');
+  const applications = await getAllApplicationsByApplicantIdOrJobId(jobId, 'jobId');
   const jobIds = generateJobIdFromArray(applications);
   if (!jobIds.includes(jobId)) {
     return errorResponse(res, notFound, applicationNotFound);

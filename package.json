@@ -47,6 +47,8 @@
     "cors": "^2.8.4",
     "coveralls": "^3.0.11",
     "cross-env": "^7.0.2",
+    "@sendgrid/mail": "^6.5.3",
+    "mailgen": "^2.0.10",
     "dotenv": "^6.2.0",
     "ejs": "^2.6.1",
     "errorhandler": "^1.5.0",

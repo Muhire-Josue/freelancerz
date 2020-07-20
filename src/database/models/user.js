@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     linkedIn: DataTypes.STRING,
     githubUsername: DataTypes.STRING,
     status: DataTypes.STRING,
-    userTypeId: DataTypes.INTEGER
+    userTypeId: DataTypes.INTEGER,
+    getEmailNotification: DataTypes.BOOLEAN,
   }, {});
   Users.associate = (models) => {
     // associations can be defined here
