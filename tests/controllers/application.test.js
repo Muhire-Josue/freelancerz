@@ -21,6 +21,7 @@ const {
   applicationApproved,
   applicationNotFound,
   allApplications,
+  applicationFound,
 } = customMessages;
 const {
   created,
@@ -237,6 +238,23 @@ describe('Application tests', () => {
         expect(message).to.equal(allApplications);
         expect(data);
         expect(data).to.be.an('array');
+        done();
+      });
+  });
+  it('should view an application for a job', (done) => {
+    chai
+      .request(server)
+      .put('/api/job/application')
+      .send({ id: jobId, applicantId: developerId })
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { data, message } = res.body;
+        jobId2 = data.id;
+        expect(res.status).to.equal(ok);
+        expect(message);
+        expect(message).to.equal(applicationFound);
+        expect(data);
+        expect(data).to.be.an('object');
         done();
       });
   });

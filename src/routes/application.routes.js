@@ -8,7 +8,12 @@ import authorization from '../middlewares/authorization.middleware';
 const { validateId, jobExist, jobIsOpen } = JobValidation;
 const { applicantIsDeveloper, duplicateJobApplication, applicationExist } = applicationValidation;
 const route = express.Router();
-const { applyJob, approveJobApplication, allJobApplications } = ApplicationController;
+const {
+  applyJob,
+  approveJobApplication,
+  allJobApplications,
+  jobApplication
+} = ApplicationController;
 
 route.post('/job/apply', [
   tokenAuthentication,
@@ -20,4 +25,5 @@ route.post('/job/apply', [
 ], applyJob);
 route.put('/job/apply/approve', [tokenAuthentication, validateId, applicationExist, authorization], approveJobApplication);
 route.put('/job/applications', [tokenAuthentication, validateId, jobExist, authorization], allJobApplications);
+route.put('/job/application', [tokenAuthentication, validateId, jobExist, authorization], jobApplication);
 export default route;
