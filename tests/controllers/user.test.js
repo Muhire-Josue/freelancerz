@@ -16,6 +16,7 @@ const {
   userNotFound,
   incorrectPassword,
   inactiveAccount,
+  notificationStatusUpdated,
 } = customMessages;
 const {
   created,
@@ -27,6 +28,7 @@ const {
 const {
   user1, clientSignup, user2, loginUser1, invalidLogin, invalidLogin2, invalidLogin3, loginUser4
 } = userMock;
+let developerToken;
 
 describe('User test', () => {
   it('Should should create a developer', (done) => {
@@ -94,6 +96,7 @@ describe('User test', () => {
       .send(loginUser1)
       .end((err, res) => {
         const { token, message } = res.body;
+        developerToken = token;
         expect(res.status).to.equal(ok);
         expect(message);
         expect(token);
@@ -156,6 +159,21 @@ describe('User test', () => {
         expect(error);
         expect(error).to.be.a('string');
         expect(error).to.equal(inactiveAccount);
+        done();
+      });
+  });
+  it('Should change the enable or disable email notifications', (done) => {
+    chai
+      .request(server)
+      .put('/api/notification/status/update')
+      .set('Authorization', `Bearer ${developerToken}`)
+      .send({ status: true })
+      .end((err, res) => {
+        const { message } = res.body;
+        expect(res.status).to.equal(ok);
+        expect(message);
+        expect(message).to.equal(notificationStatusUpdated);
+        expect(message).to.be.a('string');
         done();
       });
   });

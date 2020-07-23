@@ -1,8 +1,10 @@
 import ApplicationService from '../services/application.service';
-import StackService from '../services/stack.service';
+import UserService from '../services/user.service';
 import statusCode from '../utils/statusCodes';
 import customMessage from '../utils/customMessage';
 import responseHandler from '../utils/responseHandler.util';
+import emailMessages from '../utils/emailMessages';
+import sendEmail from '../utils/sendEmail';
 
 const {
   saveApplication,
@@ -10,7 +12,7 @@ const {
   getAllApplicationsByApplicantIdOrJobId,
   getApplicationByApplicantId,
 } = ApplicationService;
-const { getStackById } = StackService;
+const { getUserByEmailOrById } = UserService;
 
 const { ok } = statusCode;
 const {
@@ -20,6 +22,9 @@ const {
   applicationFound,
 } = customMessage;
 const { successResponse, updatedResponse } = responseHandler;
+
+const { applicationJobApproved, approvedApplicationSubject } = emailMessages;
+const { sendEmailNotification } = sendEmail;
 /**
  * @description this controller deals with job applications
  */
@@ -52,6 +57,11 @@ export default class ApplicationController {
     const jobId = parseInt(id, 10);
     const newStatus = 'approved';
     await updateApplicationStatus(jobId, userId, newStatus);
+    const { dataValues } = await getUserByEmailOrById(userId);
+    const { email, firstName, getEmailNotification } = dataValues;
+    if (getEmailNotification) {
+      sendEmailNotification(email, firstName, '#', applicationJobApproved, approvedApplicationSubject);
+    }
     return updatedResponse(res, ok, applicationApproved);
   }
 

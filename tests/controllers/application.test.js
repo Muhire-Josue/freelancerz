@@ -22,6 +22,7 @@ const {
   applicationNotFound,
   allApplications,
   applicationFound,
+  notificationStatusUpdated,
 } = customMessages;
 const {
   created,
@@ -209,13 +210,44 @@ describe('Application tests', () => {
         done();
       });
   });
+  it('Should change the enable or disable email notifications', (done) => {
+    chai
+      .request(server)
+      .put('/api/notification/status/update')
+      .set('Authorization', `Bearer ${developerToken}`)
+      .send({ status: true })
+      .end((err, res) => {
+        const { message } = res.body;
+        expect(res.status).to.equal(ok);
+        expect(message);
+        expect(message).to.equal(notificationStatusUpdated);
+        expect(message).to.be.a('string');
+        done();
+      });
+  });
+  it('should approve an application', (done) => {
+    chai
+      .request(server)
+      .put('/api/job/apply/approve')
+      .send({ id: jobId, applicantId: developerId })
+      .set('Authorization', `Bearer ${clientToken}`)
+      .end((err, res) => {
+        const { message } = res.body;
+        expect(res.status).to.equal(ok);
+        expect(message);
+        expect(message).to.equal(applicationApproved);
+        expect(message).to.be.a('string');
+        done();
+      });
+  });
   it('should not approve if the application does not exist', (done) => {
     chai
       .request(server)
       .put('/api/job/apply/approve')
-      .send({ id: jobId, applicantId: clientId })
+      .send({ id: 0, applicantId: clientId })
       .set('Authorization', `Bearer ${clientToken}`)
       .end((err, res) => {
+        console.log('res.body :>> ', res.body);
         const { error } = res.body;
         expect(res.status).to.equal(notFound);
         expect(error);

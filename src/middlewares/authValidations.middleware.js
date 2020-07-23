@@ -11,7 +11,7 @@ const {
   duplicateUserAccount, userNotFound, incorrectPassword, inactiveAccount
 } = CustomMessage;
 const { errorResponse } = handleResponse;
-const { getUserByEmail } = UserService;
+const { getUserByEmailOrById } = UserService;
 
 /** *
  * @description validates the user object for signup endpoint
@@ -58,7 +58,7 @@ const validateLoginObj = (req, res, next) => {
  */
 const userAccountDuplication = async (req, res, next) => {
   const { email } = req.body;
-  const user = await getUserByEmail(email);
+  const user = await getUserByEmailOrById(email);
   if (user) {
     return errorResponse(res, conflict, duplicateUserAccount);
   }
@@ -74,7 +74,7 @@ const userAccountDuplication = async (req, res, next) => {
  */
 const checkUserExist = async (req, res, next) => {
   const { email } = req.body;
-  const user = await getUserByEmail(email);
+  const user = await getUserByEmailOrById(email);
   if (!user || user === null) {
     return errorResponse(res, notFound, userNotFound);
   }
@@ -90,7 +90,7 @@ const checkUserExist = async (req, res, next) => {
  */
 const checkPasswordMatch = async (req, res, next) => {
   const { email, password } = req.body;
-  const { dataValues } = await getUserByEmail(email);
+  const { dataValues } = await getUserByEmailOrById(email);
   const HashedPassword = dataValues.password;
   const passwordMatch = bcrypt.compareSync(password, HashedPassword);
   if (!passwordMatch) {
@@ -108,7 +108,7 @@ const checkPasswordMatch = async (req, res, next) => {
  */
 const isAccountActive = async (req, res, next) => {
   const { email } = req.body;
-  const { dataValues } = await getUserByEmail(email);
+  const { dataValues } = await getUserByEmailOrById(email);
   if (dataValues.status === 'pending') {
     return errorResponse(res, badRequest, inactiveAccount);
   }

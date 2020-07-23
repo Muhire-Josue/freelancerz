@@ -34,6 +34,9 @@ module.exports = {
     userTypeId: {
       type: Sequelize.INTEGER
     },
+    getEmailNotification: {
+      type: Sequelize.BOOLEAN
+    },
     createdAt: {
       allowNull: false,
       type: Sequelize.DATE
