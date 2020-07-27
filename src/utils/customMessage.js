@@ -40,6 +40,8 @@ const messages = {
   allApplications: 'All applications for this job',
   applicationFound: 'Application found',
   jobDeleted: 'Job deleted successfully',
-  notificationStatusUpdated: 'Notification status updated successfully'
+  notificationStatusUpdated: 'Notification status updated successfully',
+  githubUserNotFound: 'Github user not found',
+  gitHubUserFound: 'Github user data'
 };
 export default messages;
