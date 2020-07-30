@@ -2,7 +2,9 @@ import express from 'express';
 import UserController from '../controllers/user.controller';
 import validations from '../middlewares/authValidations.middleware';
 import tokenAuthentication from '../middlewares/tokenAuthentication';
+import githubUserDataValidation from '../middlewares/githubData.validation.middleware';
 
+const { githubUserExist } = githubUserDataValidation;
 const {
   validateSignupObj,
   userAccountDuplication,
@@ -16,12 +18,10 @@ const {
   signup,
   login,
   enableOrDisableEmailNotification,
-  developerProfile
 } = UserController;
 
-routes.post('/auth/signup', [validateSignupObj, userAccountDuplication], signup);
+routes.post('/auth/signup', [validateSignupObj, userAccountDuplication, githubUserExist], signup);
 routes.post('/auth/login', [validateLoginObj, checkUserExist, checkPasswordMatch, isAccountActive], login);
 routes.put('/notification/status/update', tokenAuthentication, enableOrDisableEmailNotification);
-routes.put('/user/profile', [tokenAuthentication], developerProfile);
 
 export default routes;

@@ -1,4 +1,3 @@
-import chai from 'chai';
 import sendEmail from '../../src/utils/sendEmail';
 import emailMessages from '../../src/utils/emailMessages';
 

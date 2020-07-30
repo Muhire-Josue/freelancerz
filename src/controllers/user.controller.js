@@ -4,7 +4,7 @@ import UserService from '../services/user.service';
 import statusCode from '../utils/statusCodes';
 import customMessage from '../utils/customMessage';
 import tokenGenerator from '../utils/jwtTokenGenerator';
-import githubUserData from '../utils/githubUserData';
+import handleProfile from '../utils/HandleProfile';
 
 const { createUser, getUserByEmailOrById, changeEmailNotificationStatus } = UserService;
 const { created, ok } = statusCode;
@@ -12,9 +12,9 @@ const {
   userCreated,
   successfulLogin,
   notificationStatusUpdated,
-  gitHubUserFound,
 } = customMessage;
 const { successResponse, updatedResponse } = handleResponse;
+const { createProfile } = handleProfile;
 /**
  * @description this class deals with the user model
  */
@@ -36,6 +36,10 @@ export default class UserController {
     }
     const { dataValues } = await createUser(formData);
     const token = tokenGenerator(dataValues);
+    const userId = parseInt(dataValues.id, 10);
+    if (req.githubData) {
+      await createProfile(req.githubData, userId);
+    }
     return successResponse(res, created, userCreated, token);
   }
 
@@ -64,16 +68,5 @@ export default class UserController {
     const { status } = req.body;
     await changeEmailNotificationStatus(email, status);
     return updatedResponse(res, ok, notificationStatusUpdated);
-  }
-
-  /**
-   * @description developer's profile
-   * @param {request} req
-   * @param {response} res
-   * @returns {object} it returns a developers data that will be displayed as a profile
-   */
-  static async developerProfile(req, res) {
-    const githubData = await githubUserData(req.body.username);
-    return successResponse(res, ok, gitHubUserFound, undefined, githubData);
   }
 }

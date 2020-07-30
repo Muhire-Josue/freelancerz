@@ -4,29 +4,56 @@ import customMessage from '../../src/utils/customMessage';
 import statusCode from '../../src/utils/statusCodes';
 import server from '../../index';
 import userMock from '../data/user.mock';
+import UserService from '../../src/services/user.service';
 
-
+const { getUserByEmailOrById } = UserService;
 chai.use(chaiHttp);
 chai.should();
 
 const {
   clientLogin,
   loginUser1,
+  user3
 } = userMock;
 
 const {
   ok,
+  created
 } = statusCode;
 
 const {
   successfulLogin,
-  gitHubUserFound,
+  profileData,
+  userCreated,
 } = customMessage;
 
 let clientToken;
 let developerToken;
+let developerId;
+
+describe('Create a user', () => {
+  it('Should signup a user', (done) => {
+    chai
+      .request(server)
+      .post('/api/auth/signup')
+      .send(user3)
+      .end((err, res) => {
+        const { token, message } = res.body;
+        expect(res.status).to.equal(created);
+        expect(message);
+        expect(message).to.equal(userCreated);
+        expect(token);
+        expect(token).to.be.a('string');
+        done();
+      });
+  });
+});
 describe('Profile tests', () => {
-  it('Should should login a user', (done) => {
+  before('get a user', async () => {
+    const { dataValues } = await getUserByEmailOrById('user3@example.com');
+    developerId = dataValues.id;
+  });
+  it('Should login a user', (done) => {
     chai
       .request(server)
       .post('/api/auth/login')
@@ -63,16 +90,16 @@ describe('Profile tests', () => {
   it('Should get github data', (done) => {
     chai
       .request(server)
-      .put('/api/user/profile')
+      .put('/api/profile')
       .set('Authorization', `Bearer ${developerToken}`)
-      .send({ username: 'Muhire-Josue' })
+      .send({ userId: developerId })
       .end((err, res) => {
         const { message, data } = res.body;
         expect(res.status).to.equal(ok);
         expect(message);
         expect(data);
         expect(message).to.be.a('string');
-        expect(message).to.equal(gitHubUserFound);
+        expect(message).to.equal(profileData);
         expect(data).to.be.an('object');
         done();
       });

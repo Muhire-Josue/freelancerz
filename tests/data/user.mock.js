@@ -5,7 +5,17 @@ export default {
     email: 'user2@example.com',
     password: 'User#example11',
     phoneNumber: '0785505790',
-    userTypeId: 1
+    userTypeId: 1,
+    githubUsername: 'Muhire-Josue'
+  },
+  user3: {
+    firstName: 'Jon',
+    lastName: 'Snow',
+    email: 'user3@example.com',
+    password: 'User#example11',
+    phoneNumber: '0785505790',
+    userTypeId: 1,
+    githubUsername: 'Muhire-Josue'
   },
   clientSignup: {
     firstName: 'Sara',
@@ -13,7 +23,8 @@ export default {
     email: 'sara@example.com',
     password: 'User#example11',
     phoneNumber: '0785505790',
-    userTypeId: 2
+    userTypeId: 2,
+    githubUsername: 'Muhire-Josue'
   },
   user2: {
     firstName: 'Jane'

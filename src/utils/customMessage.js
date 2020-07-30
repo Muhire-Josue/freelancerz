@@ -42,6 +42,7 @@ const messages = {
   jobDeleted: 'Job deleted successfully',
   notificationStatusUpdated: 'Notification status updated successfully',
   githubUserNotFound: 'Github user not found',
-  gitHubUserFound: 'Github user data'
+  gitHubUserFound: 'Github user data',
+  profileData: 'Profile Data',
 };
 export default messages;

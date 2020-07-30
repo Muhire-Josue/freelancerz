@@ -26,12 +26,20 @@ const {
   ok
 } = statusCodes;
 const {
-  user1, clientSignup, user2, loginUser1, invalidLogin, invalidLogin2, invalidLogin3, loginUser4
+  user1,
+  clientSignup,
+  user2,
+  loginUser1,
+  invalidLogin,
+  invalidLogin2,
+  invalidLogin3,
+  loginUser4,
+  user3,
 } = userMock;
 let developerToken;
 
 describe('User test', () => {
-  it('Should should create a developer', (done) => {
+  it('Should create a developer', (done) => {
     chai
       .request(server)
       .post('/api/auth/signup')
@@ -46,7 +54,7 @@ describe('User test', () => {
         done();
       });
   });
-  it('Should should create a client', (done) => {
+  it('Should create a client', (done) => {
     chai
       .request(server)
       .post('/api/auth/signup')
