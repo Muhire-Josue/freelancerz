@@ -44,5 +44,6 @@ const messages = {
   githubUserNotFound: 'Github user not found',
   gitHubUserFound: 'Github user data',
   profileData: 'Profile Data',
+  notEligible: 'You dont qualify for this job',
 };
 export default messages;

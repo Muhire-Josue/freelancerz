@@ -86,7 +86,7 @@ describe('Application tests', () => {
     chai
       .request(server)
       .post('/api/jobs')
-      .send(job3)
+      .send({ ...job3, tag: '1,2,3', })
       .set('Authorization', `Bearer ${clientToken}`)
       .end((err, res) => {
         const { data, message } = res.body;
@@ -247,7 +247,6 @@ describe('Application tests', () => {
       .send({ id: 0, applicantId: clientId })
       .set('Authorization', `Bearer ${clientToken}`)
       .end((err, res) => {
-        console.log('res.body :>> ', res.body);
         const { error } = res.body;
         expect(res.status).to.equal(notFound);
         expect(error);

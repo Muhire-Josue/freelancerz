@@ -35,13 +35,13 @@ export default class JobService {
     if (['opened', 'closed', 'suspended'].includes(data)) {
       const jobs = await Job.findAll({
         where: { status: data },
-        include: [{ model: Users, as: 'jobOwner' }, { model: Stack, as: 'requiredTech' }]
+        include: [{ model: Users, as: 'jobOwner' }]
       });
       return jobs;
     }
     const job = await Job.findOne({
       where: { id: data },
-      include: [{ model: Users, as: 'jobOwner' }, { model: Stack, as: 'requiredTech' }]
+      include: [{ model: Users, as: 'jobOwner' }]
     });
     return job;
   }

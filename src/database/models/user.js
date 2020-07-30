@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     githubUsername: DataTypes.STRING,
     status: DataTypes.STRING,
     userTypeId: DataTypes.INTEGER,
+    stackId: DataTypes.STRING,
     getEmailNotification: DataTypes.BOOLEAN,
   }, {});
   Users.associate = (models) => {

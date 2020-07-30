@@ -34,6 +34,9 @@ module.exports = {
     userTypeId: {
       type: Sequelize.INTEGER
     },
+    stackId: {
+      type: Sequelize.STRING
+    },
     getEmailNotification: {
       type: Sequelize.BOOLEAN
     },

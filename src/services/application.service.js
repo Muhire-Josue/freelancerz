@@ -1,6 +1,6 @@
 import models from '../database/models/index';
 
-const { JobApplications, Users } = models;
+const { JobApplications, Users, Job } = models;
 
 /**
  * This service deals with job applications
@@ -27,13 +27,19 @@ export default class JobService {
     if (type === 'applicantId') {
       applications = await JobApplications.findAll({
         where: { applicantId: id },
-        include: [{ model: Users, as: 'users' }]
+        include: [
+          { model: Users, as: 'users', attributes: ['firstName', 'lastName', 'email', 'phoneNumber', 'linkedIn', 'githubUsername', 'status', 'getEmailNotification', 'stackId'] },
+          { model: Job, as: 'job' }
+        ]
 
       });
     }
     applications = await JobApplications.findAll({
       where: { jobId: id },
-      include: [{ model: Users, as: 'users' }]
+      include: [
+        { model: Users, as: 'users', attributes: ['firstName', 'lastName', 'email', 'phoneNumber', 'linkedIn', 'githubUsername', 'status', 'getEmailNotification', 'stackId'] },
+        { model: Job, as: 'job' }
+      ]
     });
     return applications;
   }
@@ -59,10 +65,13 @@ export default class JobService {
    * @param {integer} applicantId
    * @returns {object} it returns the application
    */
-  static async getApplicationByApplicantId(jobId, applicantId) {
+  static async getApplicationByApplicantIdAndJobId(jobId, applicantId) {
     const application = await JobApplications.findOne({
       where: { jobId, applicantId },
-      include: [{ model: Users, as: 'users' }]
+      include: [
+        { model: Users, as: 'users' },
+        { model: Job, as: 'job' }
+      ]
     });
     return application;
   }

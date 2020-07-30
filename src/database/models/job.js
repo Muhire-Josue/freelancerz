@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     endDate: DataTypes.DATE,
     description: DataTypes.STRING,
     clientId: DataTypes.INTEGER,
-    stackId: DataTypes.INTEGER
+    stackId: DataTypes.STRING
   }, {});
   Job.associate = (models) => {
     // associations can be defined here

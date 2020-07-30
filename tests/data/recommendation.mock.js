@@ -1,0 +1,110 @@
+export default [
+  {
+    dataValues: {},
+    id: 1,
+    jobId: 1,
+    applicantId: 1,
+    status: 'pending',
+    createdAt: '2020-07-30T13:09:39.584Z',
+    updatedAt: '2020-07-30T13:09:39.584Z',
+    users: {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'user@example.com',
+      phoneNumber: '0785505790',
+      linkedIn: null,
+      githubUsername: null,
+      status: 'active',
+      getEmailNotification: null,
+      stackId: '1,2,4'
+    },
+    job: {
+      id: 1,
+      title: 'Web development',
+      price: 1000000,
+      yearsOfExperience: '2',
+      jobType: 'full-time',
+      status: 'opened',
+      startDate: '2020-12-06T22:00:00.000Z',
+      endDate: '2020-12-07T22:00:00.000Z',
+      description: 'hello world',
+      clientId: 2,
+      stackId: '1,2,3',
+      createdAt: '2020-07-30T13:09:04.302Z',
+      updatedAt: '2020-07-30T13:09:04.302Z'
+    },
+    recommendation: 'High'
+  },
+  {
+    dataValues: {},
+    id: 2,
+    jobId: 1,
+    applicantId: 3,
+    status: 'pending',
+    createdAt: '2020-07-31T08:39:00.177Z',
+    updatedAt: '2020-07-31T08:39:00.177Z',
+    users: {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'rutayisire.josue@gmail.com',
+      phoneNumber: '0785505790',
+      linkedIn: null,
+      githubUsername: 'Muhire-Josue',
+      status: 'pending',
+      getEmailNotification: true,
+      stackId: '1,2,4'
+    },
+    job: {
+      id: 1,
+      title: 'Web development',
+      price: 1000000,
+      yearsOfExperience: '2',
+      jobType: 'full-time',
+      status: 'opened',
+      startDate: '2020-12-06T22:00:00.000Z',
+      endDate: '2020-12-07T22:00:00.000Z',
+      description: 'hello world',
+      clientId: 2,
+      stackId: '1,2,3',
+      createdAt: '2020-07-30T13:09:04.302Z',
+      updatedAt: '2020-07-30T13:09:04.302Z'
+    },
+    recommendation: 'High'
+  },
+  {
+    dataValues: {},
+    id: 3,
+    jobId: 1,
+    applicantId: 3,
+    status: 'pending',
+    createdAt: '2020-07-31T08:54:28.336Z',
+    updatedAt: '2020-07-31T08:54:28.336Z',
+    users: {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'rutayisire.josue@gmail.com',
+      phoneNumber: '0785505790',
+      linkedIn: null,
+      githubUsername: 'Muhire-Josue',
+      status: 'pending',
+      getEmailNotification: true,
+      stackId: '1,2,4'
+    },
+    job: {
+      id: 1,
+      title: 'Web development',
+      price: 1000000,
+      yearsOfExperience: '2',
+      jobType: 'full-time',
+      status: 'opened',
+      startDate: '2020-12-06T22:00:00.000Z',
+      endDate: '2020-12-07T22:00:00.000Z',
+      description: 'hello world',
+      clientId: 2,
+      stackId: '1,2,3',
+      createdAt: '2020-07-30T13:09:04.302Z',
+      updatedAt: '2020-07-30T13:09:04.302Z'
+    },
+    recommendation: 'High'
+  }
+];
