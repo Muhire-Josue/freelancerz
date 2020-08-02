@@ -1,18 +1,21 @@
 import ApplicationService from '../services/application.service';
 import UserService from '../services/user.service';
+import JobService from '../services/job.service';
 import statusCode from '../utils/statusCodes';
 import customMessage from '../utils/customMessage';
 import responseHandler from '../utils/responseHandler.util';
 import emailMessages from '../utils/emailMessages';
 import sendEmail from '../utils/sendEmail';
+import getRecommendations from '../utils/getRecommendations';
 
 const {
   saveApplication,
   updateApplicationStatus,
   getAllApplicationsByApplicantIdOrJobId,
-  getApplicationByApplicantId,
+  getApplicationByApplicantIdAndJobId,
 } = ApplicationService;
 const { getUserByEmailOrById } = UserService;
+const { getJobByStatusOrById } = JobService;
 
 const { ok } = statusCode;
 const {
@@ -25,6 +28,11 @@ const { successResponse, updatedResponse } = responseHandler;
 
 const { applicationJobApproved, approvedApplicationSubject } = emailMessages;
 const { sendEmailNotification } = sendEmail;
+const {
+  getRecommendationForAllApplicants,
+  getApplicationWithRecommendation,
+} = getRecommendations;
+
 /**
  * @description this controller deals with job applications
  */
@@ -74,6 +82,11 @@ export default class ApplicationController {
     const { id } = req.body;
     const jobId = parseInt(id, 10);
     const applications = await getAllApplicationsByApplicantIdOrJobId(jobId, 'jobId');
+    const job = await getJobByStatusOrById(jobId);
+    if (job.dataValues.stackId) {
+      const applicationsWithRecommendation = getRecommendationForAllApplicants(applications);
+      return successResponse(res, ok, allApplications, undefined, applicationsWithRecommendation);
+    }
     return successResponse(res, ok, allApplications, undefined, applications);
   }
 
@@ -84,7 +97,12 @@ export default class ApplicationController {
    */
   static async jobApplication(req, res) {
     const { id, applicantId } = req.body;
-    const application = await getApplicationByApplicantId(id, applicantId);
-    return successResponse(res, ok, applicationFound, undefined, application);
+    const application = await getApplicationByApplicantIdAndJobId(id, applicantId);
+    const jobId = parseInt(id, 10);
+    const job = await getJobByStatusOrById(jobId);
+    if (job.dataValues.stackId) {
+      const applicationsWithRecommendation = getApplicationWithRecommendation(application);
+      return successResponse(res, ok, applicationFound, undefined, applicationsWithRecommendation);
+    }
   }
 }

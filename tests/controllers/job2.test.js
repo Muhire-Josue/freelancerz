@@ -18,6 +18,7 @@ const {
   duplicateStatus,
   unauthorizedAccess,
   jobDeleted,
+  invalidStartDate,
 } = customMessages;
 const {
   created,
@@ -89,6 +90,21 @@ describe('Second Job tests', () => {
         expect(message).to.equal(postJob);
         expect(data);
         expect(data).to.be.an('object');
+        done();
+      });
+  });
+
+  it('should not create job with an invalid startDate', (done) => {
+    chai
+      .request(server)
+      .post('/api/jobs')
+      .send({ ...job3, startDate: '12-7-2019' })
+      .set('Authorization', `Bearer ${developerToken}`)
+      .end((err, res) => {
+        const { error } = res.body;
+        expect(res.status).to.equal(badRequest);
+        expect(error);
+        expect(error).to.be.a('string');
         done();
       });
   });

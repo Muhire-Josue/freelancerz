@@ -3,6 +3,8 @@ import responseHandler from '../utils/responseHandler.util';
 import customMessage from '../utils/customMessage';
 import generateJobIdFromArray from '../utils/generateJobId';
 import ApplicationService from '../services/application.service';
+import JobService from '../services/job.service';
+import ProfileService from '../services/profile.service';
 
 const {
   badRequest,
@@ -11,8 +13,15 @@ const {
   notFound
 } = statusCode;
 const { errorResponse } = responseHandler;
-const { notDeveloper, duplicateApplication, applicationNotFound } = customMessage;
+const {
+  notDeveloper,
+  duplicateApplication,
+  applicationNotFound,
+  notEligible
+} = customMessage;
 const { getAllApplicationsByApplicantIdOrJobId } = ApplicationService;
+const { getJobByStatusOrById } = JobService;
+const { getProfileByUserId } = ProfileService;
 
 /**
  * @description check if applicant is a developer
@@ -66,8 +75,23 @@ const applicationExist = async (req, res, next) => {
   return next();
 };
 
+const isApplicantEligible = async (req, res, next) => {
+  const { id } = req.body;
+  const jobId = parseInt(id, 10);
+  const userId = req.authUser.id;
+  const profile = await getProfileByUserId(userId);
+  const job = await getJobByStatusOrById(jobId);
+  if (job.dataValues.yearsOfExperience && profile) {
+    if (profile.dataValues.yearsOfExperience < job.dataValues.yearsOfExperience) {
+      return errorResponse(res, forbidden, notEligible);
+    }
+  }
+  return next();
+};
+
 export default {
   applicantIsDeveloper,
   duplicateJobApplication,
   applicationExist,
+  isApplicantEligible,
 };

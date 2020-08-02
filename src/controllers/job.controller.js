@@ -33,17 +33,12 @@ export default class JobController {
      */
   static async createJob(req, res) {
     const newJob = req.body;
-    const stack = {};
-    let newStack;
+    const { tag } = newJob;
     newJob.status = 'opened';
     newJob.clientId = req.authUser.id;
-    stack.tech = newJob.tag;
-    newStack = await saveStack(stack);
-    newStack = newStack.dataValues;
-    newJob.stackId = newStack.id;
+    newJob.stackId = tag;
     const { dataValues } = await saveJob(newJob);
-    const job = dataValues;
-    return successResponse(res, created, postJob, undefined, job);
+    return successResponse(res, created, postJob, undefined, dataValues);
   }
 
   /**

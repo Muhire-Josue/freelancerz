@@ -34,7 +34,7 @@ module.exports = {
       type: Sequelize.INTEGER
     },
     stackId: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING
     },
     createdAt: {
       allowNull: false,

@@ -6,7 +6,6 @@ describe('Test handleProfile functions in utils', () => {
   it('Should test githubUserData with invalid input', (done) => {
     githubUserData('')
       .then(data => {
-        console.log('data :>> ', data);
         done();
       })
       .catch(error => {
