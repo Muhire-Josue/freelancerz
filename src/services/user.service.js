@@ -43,4 +43,18 @@ export default class UserServices {
       { where: { email } }
     );
   }
+
+  /**
+ * @description updates profile
+ * @param {object} data
+ * @param {integer} id
+ * @returns {null} nothing
+ */
+  static async updateProfile(data, id) {
+    await Users.update(data, {
+      where: {
+        id
+      }
+    });
+  }
 }

@@ -53,4 +53,17 @@ export default {
     email: 'client@example.com',
     password: 'User#example11',
   },
+  userProfile: {
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'rutayisire.josue@gmail.com',
+    password: '$2b$10$0SRatuDhNFr/cSd9Cs3WvesuqVbJGtTHupY39Vms2uRSR1QbzYnkW',
+    phoneNumber: '0785505790',
+    linkedIn: null,
+    githubUsername: 'Muhire-Josue',
+    status: 'pending',
+    userTypeId: 1,
+    stackId: '1,2,4',
+    getEmailNotification: true,
+  },
 };
