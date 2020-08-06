@@ -49,6 +49,9 @@ npm test
 | `/api/job/apply/approve` | PUT | Approve an application |
 | `/api/job/applications` | PUT | View all applications |
 | `/api/job/application` | PUT | View an application |
+| `/api/job/application` | PUT | View an application |
+| `/api/job/profile` | PUT | View profile |
+| `/api/job/profile/edit` | PUT | update profile |
 | `/api/job/` | DELETE | Delete a job |
 ### How can it be manually tested
 - using [postman](https://www.getpostman.com/downloads/)
