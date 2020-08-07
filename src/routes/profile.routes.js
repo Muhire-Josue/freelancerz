@@ -6,6 +6,6 @@ import ProfileController from '../controllers/profile.controller';
 const { userProfile, editProfile } = ProfileController;
 const routes = express.Router();
 
-routes.put('/profile', [tokenAuthentication], userProfile);
+routes.post('/profile', [tokenAuthentication], userProfile);
 routes.put('/profile/edit', [tokenAuthentication], editProfile);
 export default routes;

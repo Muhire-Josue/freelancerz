@@ -47,10 +47,9 @@ npm test
 | `/api/job?id=1&status=closed` | PUT | Update job Status |
 | `/api/job/edit` | PUT | Update a job |
 | `/api/job/apply/approve` | PUT | Approve an application |
-| `/api/job/applications` | PUT | View all applications |
-| `/api/job/application` | PUT | View an application |
-| `/api/job/application` | PUT | View an application |
-| `/api/job/profile` | PUT | View profile |
+| `/api/job/applications` | POST | View all applications |
+| `/api/job/application` | POST | View an application |
+| `/api/job/profile` | POST | View profile |
 | `/api/job/profile/edit` | PUT | update profile |
 | `/api/job/` | DELETE | Delete a job |
 ### How can it be manually tested
