@@ -258,7 +258,7 @@ describe('Application tests', () => {
   it('should view all applications for a job', (done) => {
     chai
       .request(server)
-      .put('/api/job/applications')
+      .post('/api/job/applications')
       .send({ id: jobId })
       .set('Authorization', `Bearer ${clientToken}`)
       .end((err, res) => {
@@ -275,7 +275,7 @@ describe('Application tests', () => {
   it('should view an application for a job', (done) => {
     chai
       .request(server)
-      .put('/api/job/application')
+      .post('/api/job/application')
       .send({ id: jobId, applicantId: developerId })
       .set('Authorization', `Bearer ${clientToken}`)
       .end((err, res) => {

@@ -173,7 +173,7 @@ describe('Profile tests', () => {
   it('Should get github data', (done) => {
     chai
       .request(server)
-      .put('/api/profile')
+      .post('/api/profile')
       .set('Authorization', `Bearer ${developerToken}`)
       .send({ userId: developerId })
       .end((err, res) => {
