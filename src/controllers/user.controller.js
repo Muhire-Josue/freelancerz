@@ -1,17 +1,21 @@
 import bcrypt from 'bcrypt';
 import handleResponse from '../utils/responseHandler.util';
 import UserService from '../services/user.service';
+import StackService from '../services/stack.service';
 import statusCode from '../utils/statusCodes';
 import customMessage from '../utils/customMessage';
 import tokenGenerator from '../utils/jwtTokenGenerator';
 import handleProfile from '../utils/HandleProfile';
 
 const { createUser, getUserByEmailOrById, changeEmailNotificationStatus } = UserService;
+const { getAllStack } = StackService;
 const { created, ok } = statusCode;
 const {
   userCreated,
   successfulLogin,
   notificationStatusUpdated,
+  userData,
+  allStacks,
 } = customMessage;
 const { successResponse, updatedResponse } = handleResponse;
 const { createProfile } = handleProfile;
@@ -68,5 +72,27 @@ export default class UserController {
     const { status } = req.body;
     await changeEmailNotificationStatus(email, status);
     return updatedResponse(res, ok, notificationStatusUpdated);
+  }
+
+  /**
+   * @description get the user from the token
+   * @param {request} req
+   * @param {response} res
+   * @returns {object} it returns the user from the token
+   */
+  static async getUser(req, res) {
+    const user = req.authUser;
+    return successResponse(res, ok, userData, undefined, user);
+  }
+
+  /**
+   * @description get all stacks
+   * @param {request} req
+   * @param {response} res
+   * @returns {object} it returns an array of stacks
+   */
+  static async findAllStacks(req, res) {
+    const stacks = await getAllStack();
+    return successResponse(res, ok, allStacks, undefined, stacks);
   }
 }
