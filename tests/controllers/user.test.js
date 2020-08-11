@@ -17,6 +17,8 @@ const {
   incorrectPassword,
   inactiveAccount,
   notificationStatusUpdated,
+  userData,
+  allStacks,
 } = customMessages;
 const {
   created,
@@ -46,6 +48,7 @@ describe('User test', () => {
       .send(user1)
       .end((err, res) => {
         const { token, message } = res.body;
+        developerToken = token;
         expect(res.status).to.equal(created);
         expect(message);
         expect(message).to.equal(userCreated);
@@ -93,6 +96,37 @@ describe('User test', () => {
         expect(res.status).to.equal(badRequest);
         expect(error);
         expect(error).to.be.a('string');
+        done();
+      });
+  });
+  it('Should get the user data from the token', (done) => {
+    chai
+      .request(server)
+      .get('/api/user')
+      .set('Authorization', `Bearer ${developerToken}`)
+      .end((err, res) => {
+        const { message, data } = res.body;
+        expect(res.status).to.equal(ok);
+        expect(message);
+        expect(data);
+        expect(message).to.be.a('string');
+        expect(message).to.equal(userData);
+        expect(data).to.be.an('object');
+        done();
+      });
+  });
+  it('Should get all stack', (done) => {
+    chai
+      .request(server)
+      .get('/api/stacks')
+      .end((err, res) => {
+        const { message, data } = res.body;
+        expect(res.status).to.equal(ok);
+        expect(message);
+        expect(data);
+        expect(message).to.be.a('string');
+        expect(message).to.equal(allStacks);
+        expect(data).to.be.an('array');
         done();
       });
   });

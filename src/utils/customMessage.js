@@ -45,6 +45,8 @@ const messages = {
   gitHubUserFound: 'Github user data',
   profileData: 'Profile Data',
   notEligible: 'You dont qualify for this job',
-  profileUpdated: 'Profile updated successfully'
+  profileUpdated: 'Profile updated successfully',
+  userData: 'User Data',
+  allStacks: 'All stacks'
 };
 export default messages;

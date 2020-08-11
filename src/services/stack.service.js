@@ -27,4 +27,13 @@ export default class StackService {
     });
     return stack;
   }
+
+  /**
+ * @description finds all stacks
+ * @returns {array} an array of all stacks
+ */
+  static async getAllStack() {
+    const stacks = await Stack.findAll();
+    return stacks;
+  }
 }
