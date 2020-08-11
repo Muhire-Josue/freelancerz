@@ -52,6 +52,8 @@ npm test
 | `/api/job/profile` | POST | View profile |
 | `/api/job/profile/edit` | PUT | update profile |
 | `/api/job/` | DELETE | Delete a job |
+| `/api/stacks/` | GET | Get all stacks |
+| `/api/user` | GET | Get user from token |
 ### How can it be manually tested
 - using [postman](https://www.getpostman.com/downloads/)
 ### Pivotal tracker stories
