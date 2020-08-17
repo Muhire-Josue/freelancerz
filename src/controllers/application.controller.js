@@ -7,15 +7,17 @@ import responseHandler from '../utils/responseHandler.util';
 import emailMessages from '../utils/emailMessages';
 import sendEmail from '../utils/sendEmail';
 import getRecommendations from '../utils/getRecommendations';
+import getStack from '../utils/getStack';
 
 const {
   saveApplication,
   updateApplicationStatus,
   getAllApplicationsByApplicantIdOrJobId,
-  getApplicationByApplicantIdAndJobId,
+  getApplicationById,
 } = ApplicationService;
 const { getUserByEmailOrById } = UserService;
 const { getJobByStatusOrById } = JobService;
+const { generateStacksForJobApplication } = getStack;
 
 const { ok } = statusCode;
 const {
@@ -51,7 +53,13 @@ export default class ApplicationController {
     application.applicantId = parseInt(userId, 10);
     application.status = 'pending';
     const { dataValues } = await saveApplication(application);
-    return successResponse(res, ok, appliedSuccessfully, undefined, dataValues);
+    const jobApplication = await getApplicationById(dataValues.id);
+    if (jobApplication.dataValues.job.dataValues.stackId) {
+      // eslint-disable-next-line max-len
+      const jobApplicationWithStacks = await generateStacksForJobApplication(jobApplication.dataValues);
+      return successResponse(res, ok, appliedSuccessfully, undefined, jobApplicationWithStacks);
+    }
+    return successResponse(res, ok, appliedSuccessfully, undefined, jobApplication);
   }
 
   /**
@@ -96,13 +104,14 @@ export default class ApplicationController {
    * @returns {array} it returns all applications for a specific job
    */
   static async jobApplication(req, res) {
-    const { id, applicantId } = req.body;
-    const application = await getApplicationByApplicantIdAndJobId(id, applicantId);
-    const jobId = parseInt(id, 10);
+    const { id } = req.body;
+    const application = await getApplicationById(id);
+    const jobId = parseInt(application.dataValues.jobId, 10);
     const job = await getJobByStatusOrById(jobId);
     if (job.dataValues.stackId) {
       const applicationsWithRecommendation = getApplicationWithRecommendation(application);
       return successResponse(res, ok, applicationFound, undefined, applicationsWithRecommendation);
     }
+    return successResponse(res, ok, applicationFound, undefined, application);
   }
 }

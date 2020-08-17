@@ -10,7 +10,8 @@ export default {
     jobType: 'full-time',
     startDate: someDate,
     endDate: someDate2,
-    description: 'hello world'
+    description: 'hello world',
+    tag: '1,2,4',
   },
   job2: {
     title: 'Web development',
@@ -22,6 +23,7 @@ export default {
     jobType: 'full-time',
     startDate: someDate,
     endDate: someDate2,
-    description: 'this is an ecommerce website'
+    description: 'this is an ecommerce website',
+    tag: '1,2,4',
   },
 };
