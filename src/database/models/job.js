@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE,
-    description: DataTypes.STRING,
+    description: DataTypes.TEXT,
     clientId: DataTypes.INTEGER,
     stackId: DataTypes.STRING
   }, {});

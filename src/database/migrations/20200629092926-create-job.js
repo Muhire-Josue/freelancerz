@@ -28,7 +28,7 @@ module.exports = {
       type: Sequelize.DATE
     },
     description: {
-      type: Sequelize.STRING
+      type: Sequelize.TEXT
     },
     clientId: {
       type: Sequelize.INTEGER
