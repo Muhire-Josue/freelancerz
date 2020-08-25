@@ -3,7 +3,6 @@ import ApplicationController from '../controllers/application.controller';
 import tokenAuthentication from '../middlewares/tokenAuthentication';
 import JobValidation from '../middlewares/jobValidations.middleware';
 import applicationValidation from '../middlewares/applicationValidation.middleware';
-import authorization from '../middlewares/authorization.middleware';
 
 const { validateId, jobExist, jobIsOpen } = JobValidation;
 const {
@@ -29,7 +28,7 @@ route.post('/job/apply', [
   duplicateJobApplication,
   isApplicantEligible,
 ], applyJob);
-route.put('/job/apply/approve', [tokenAuthentication, validateId, applicationExist, authorization], approveJobApplication);
-route.post('/job/applications', [tokenAuthentication, validateId, jobExist, authorization], allJobApplications);
-route.post('/job/application', [tokenAuthentication, validateId, authorization], jobApplication);
+route.put('/job/apply/approve', [tokenAuthentication, validateId, applicationExist], approveJobApplication);
+route.post('/job/applications', [tokenAuthentication, validateId, jobExist], allJobApplications);
+route.post('/job/application', [tokenAuthentication, validateId, applicationExist], jobApplication);
 export default route;

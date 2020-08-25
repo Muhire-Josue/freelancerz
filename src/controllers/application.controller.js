@@ -5,9 +5,9 @@ import statusCode from '../utils/statusCodes';
 import customMessage from '../utils/customMessage';
 import responseHandler from '../utils/responseHandler.util';
 import emailMessages from '../utils/emailMessages';
-import sendEmail from '../utils/sendEmail';
 import getRecommendations from '../utils/getRecommendations';
 import getStack from '../utils/getStack';
+import sendEmail from '../utils/sendEmail';
 
 const {
   saveApplication,
@@ -19,6 +19,8 @@ const { getUserByEmailOrById } = UserService;
 const { getJobByStatusOrById } = JobService;
 const { generateStacksForJobApplication } = getStack;
 
+const { approvedApplicationEmail } = sendEmail;
+
 const { ok } = statusCode;
 const {
   appliedSuccessfully,
@@ -29,7 +31,6 @@ const {
 const { successResponse, updatedResponse } = responseHandler;
 
 const { applicationJobApproved, approvedApplicationSubject } = emailMessages;
-const { sendEmailNotification } = sendEmail;
 const {
   getRecommendationForAllApplicants,
   getApplicationWithRecommendation,
@@ -68,20 +69,22 @@ export default class ApplicationController {
    * @returns {object} it returns a success message upon successful application approval
    */
   static async approveJobApplication(req, res) {
-    const { applicantId, id } = req.body;
-    const userId = parseInt(applicantId, 10);
-    const jobId = parseInt(id, 10);
+    const { id } = req.body;
+    const applicationId = parseInt(id, 10);
     const newStatus = 'approved';
-    await updateApplicationStatus(jobId, userId, newStatus);
+    await updateApplicationStatus(applicationId, newStatus);
+    const application = await getApplicationById(applicationId);
+    const userId = parseInt(application.dataValues.applicantId, 10);
     const { dataValues } = await getUserByEmailOrById(userId);
     const { email, firstName, getEmailNotification } = dataValues;
     if (getEmailNotification) {
-      sendEmailNotification(email, firstName, '#', applicationJobApproved, approvedApplicationSubject);
+    // eslint-disable-next-line max-len
+      approvedApplicationEmail(email, firstName, '#', applicationJobApproved, approvedApplicationSubject);
     }
     return updatedResponse(res, ok, applicationApproved);
   }
 
-  /**
+  /** jobId
    * @param {Request} req
    * @param {Response} res
    * @returns {array} it returns all applications for a specific job

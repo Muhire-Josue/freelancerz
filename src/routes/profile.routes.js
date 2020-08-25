@@ -1,6 +1,5 @@
 import express from 'express';
 import tokenAuthentication from '../middlewares/tokenAuthentication';
-import githubUserDataValidation from '../middlewares/githubData.validation.middleware';
 import ProfileController from '../controllers/profile.controller';
 
 const { userProfile, editProfile } = ProfileController;
