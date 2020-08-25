@@ -1,8 +1,10 @@
 import JobService from '../services/job.service';
+import UserService from '../services/user.service';
 import StackService from '../services/stack.service';
 import customMessages from '../utils/customMessage';
 import statusCode from '../utils/statusCodes';
 import responseHandler from '../utils/responseHandler.util';
+import getStack from '../utils/getStack';
 
 const {
   saveJob,
@@ -11,6 +13,7 @@ const {
   deleteJobByJobId
 } = JobService;
 const { saveStack } = StackService;
+const { getUserByEmailOrById } = UserService;
 const {
   postJob,
   allJobs,
@@ -20,6 +23,7 @@ const {
 } = customMessages;
 const { created, ok } = statusCode;
 const { successResponse, updatedResponse } = responseHandler;
+const { generateStacksForJobs, generateStacksForAJob } = getStack;
 
 /**
  * @description this controller works with everything regarding jobs
@@ -38,6 +42,7 @@ export default class JobController {
     newJob.clientId = req.authUser.id;
     newJob.stackId = tag;
     const { dataValues } = await saveJob(newJob);
+    dataValues.jobOwner = await getUserByEmailOrById(dataValues.clientId);
     return successResponse(res, created, postJob, undefined, dataValues);
   }
 
@@ -49,7 +54,8 @@ export default class JobController {
   static async allOpenJobs(req, res) {
     const { status } = req.query;
     const jobs = await getJobByStatusOrById(status);
-    return successResponse(res, ok, allJobs, undefined, jobs);
+    const jobsWithStacks = await generateStacksForJobs(jobs);
+    return successResponse(res, ok, allJobs, undefined, jobsWithStacks);
   }
 
   /**
@@ -61,7 +67,8 @@ export default class JobController {
     const { id } = req.body;
     const jobId = parseInt(id, 10);
     const job = await getJobByStatusOrById(jobId);
-    return successResponse(res, ok, jobDetails, undefined, job.dataValues);
+    const jobWithStacks = await generateStacksForAJob(job.dataValues);
+    return successResponse(res, ok, jobDetails, undefined, jobWithStacks);
   }
 
   /**

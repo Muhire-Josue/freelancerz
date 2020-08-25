@@ -6,7 +6,6 @@ import jobMock from '../data/job.mock';
 import customMessages from '../../src/utils/customMessage';
 import statusCodes from '../../src/utils/statusCodes';
 
-
 chai.use(chaiHttp);
 chai.should();
 
@@ -41,7 +40,6 @@ const {
 let clientToken;
 let jobId;
 
-
 const { startDate } = job1;
 const month = new Date(startDate).getMonth() - 1;
 const day = new Date(startDate).getDay();
@@ -73,7 +71,7 @@ describe('Job tests', () => {
     chai
       .request(server)
       .post('/api/jobs')
-      .send(job1)
+      .send({ ...job1, stackId: '1,2,3' })
       .set('Authorization', `Bearer ${clientToken}`)
       .end((err, res) => {
         const { data, message } = res.body;

@@ -8,6 +8,7 @@ module.exports = {
     status: 'active',
     userTypeId: 1,
     stackId: '1,2,4',
+    linkedIn: 'https://www.linkedin.com/in/muhire-josu%C3%A9-43930010a/',
     createdAt: new Date(),
     updatedAt: new Date()
   },
@@ -19,6 +20,7 @@ module.exports = {
     phoneNumber: '0785505790',
     status: 'active',
     userTypeId: 2,
+    linkedIn: 'https://www.linkedin.com/in/muhire-josu%C3%A9-43930010a/',
     createdAt: new Date(),
     updatedAt: new Date()
   }], {}),

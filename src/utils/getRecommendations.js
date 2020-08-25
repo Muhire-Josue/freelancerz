@@ -52,8 +52,6 @@ const getRecommendationForAllApplicants = (applications) => {
 };
 
 const getApplicationWithRecommendation = application => {
-  // const devSkills = application.users.stackId
-  // const requiredSkills = application.job.stackId
   const devSkills = application.users.stackId.split(',');
   const requiredSkills = application.job.stackId.split(',');
   application.dataValues.recommendation = getDevRecommendation(requiredSkills, devSkills);

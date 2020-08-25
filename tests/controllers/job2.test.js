@@ -6,7 +6,6 @@ import jobMock from '../data/job.mock';
 import customMessages from '../../src/utils/customMessage';
 import statusCodes from '../../src/utils/statusCodes';
 
-
 chai.use(chaiHttp);
 chai.should();
 
@@ -39,7 +38,6 @@ let clientToken;
 let developerToken;
 let jobId;
 let job2Id;
-
 
 describe('Second Job tests', () => {
   it('Should should login a user', (done) => {

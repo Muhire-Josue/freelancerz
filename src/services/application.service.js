@@ -61,13 +61,12 @@ export default class JobService {
 
   /**
    * @description returns a job application based on jobId and applicantId
-   * @param {integer} jobId
-   * @param {integer} applicantId
+   * @param {integer} id
    * @returns {object} it returns the application
    */
-  static async getApplicationByApplicantIdAndJobId(jobId, applicantId) {
+  static async getApplicationById(id) {
     const application = await JobApplications.findOne({
-      where: { jobId, applicantId },
+      where: { id },
       include: [
         { model: Users, as: 'users' },
         { model: Job, as: 'job' }
