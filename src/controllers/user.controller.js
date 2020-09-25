@@ -81,7 +81,9 @@ export default class UserController {
    * @returns {object} it returns the user from the token
    */
   static async getUser(req, res) {
-    const user = req.authUser;
+    const { id } = req.query;
+    const userId = parseInt(id, 10);
+    const user = await getUserByEmailOrById(userId);
     return successResponse(res, ok, userData, undefined, user);
   }
 
