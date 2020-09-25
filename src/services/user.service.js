@@ -1,6 +1,6 @@
 import models from '../database/models';
 
-const { Users } = models;
+const { Users, Profile } = models;
 
 /**
  * @description This service deals with the User model
@@ -24,10 +24,10 @@ export default class UserServices {
   static async getUserByEmailOrById(value) {
     let user;
     if (typeof value === 'string') {
-      user = Users.findOne({ where: { email: value } });
+      user = Users.findOne({ where: { email: value }, include: [{ model: Profile, as: 'profile' }] });
       return user;
     }
-    user = Users.findOne({ where: { id: value } });
+    user = Users.findOne({ where: { id: value }, include: [{ model: Profile, as: 'profile' }] });
     return user;
   }
 
