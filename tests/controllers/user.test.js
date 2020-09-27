@@ -5,7 +5,6 @@ import userMock from '../data/user.mock';
 import customMessages from '../../src/utils/customMessage';
 import statusCodes from '../../src/utils/statusCodes';
 
-
 chai.use(chaiHttp);
 chai.should();
 
@@ -102,7 +101,7 @@ describe('User test', () => {
   it('Should get the user data from the token', (done) => {
     chai
       .request(server)
-      .get('/api/user')
+      .get('/api/user?id=1')
       .set('Authorization', `Bearer ${developerToken}`)
       .end((err, res) => {
         const { message, data } = res.body;
