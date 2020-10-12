@@ -4,7 +4,6 @@ import responseHandler from '../utils/responseHandler.util';
 import ProfileService from '../services/profile.service';
 import UserService from '../services/user.service';
 
-
 const { successResponse, updatedResponse } = responseHandler;
 const { profileData, profileUpdated } = customMessage;
 const { ok } = statusCode;
