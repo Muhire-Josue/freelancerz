@@ -4,3 +4,4 @@ coverage
 .nyc_output
 .env
 .vscode
+yarn.lock
