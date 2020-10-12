@@ -1,6 +1,8 @@
 import models from '../database/models/index';
 
-const { JobApplications, Users, Job } = models;
+const {
+  JobApplications, Users, Job, Profile
+} = models;
 
 /**
  * This service deals with job applications
@@ -28,7 +30,9 @@ export default class JobService {
       applications = await JobApplications.findAll({
         where: { applicantId: id },
         include: [
-          { model: Users, as: 'users', attributes: ['firstName', 'lastName', 'email', 'phoneNumber', 'linkedIn', 'githubUsername', 'status', 'getEmailNotification', 'stackId'] },
+          {
+            model: Users, as: 'users', include: [{ model: Profile, as: 'profile' }], attributes: ['firstName', 'lastName', 'email', 'phoneNumber', 'linkedIn', 'githubUsername', 'status', 'getEmailNotification', 'stackId']
+          },
           { model: Job, as: 'job' }
         ]
 
@@ -37,7 +41,9 @@ export default class JobService {
     applications = await JobApplications.findAll({
       where: { jobId: id },
       include: [
-        { model: Users, as: 'users', attributes: ['firstName', 'lastName', 'email', 'phoneNumber', 'linkedIn', 'githubUsername', 'status', 'getEmailNotification', 'stackId'] },
+        {
+          model: Users, as: 'users', include: [{ model: Profile, as: 'profile' }], attributes: ['firstName', 'lastName', 'email', 'phoneNumber', 'linkedIn', 'githubUsername', 'status', 'getEmailNotification', 'stackId']
+        },
         { model: Job, as: 'job' }
       ]
     });
@@ -68,7 +74,7 @@ export default class JobService {
     const application = await JobApplications.findOne({
       where: { id },
       include: [
-        { model: Users, as: 'users' },
+        { model: Users, as: 'users', include: [{ model: Profile, as: 'profile' }] },
         { model: Job, as: 'job' }
       ]
     });

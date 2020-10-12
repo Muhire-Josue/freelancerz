@@ -6,7 +6,6 @@ import jobMock from '../data/job.mock';
 import customMessages from '../../src/utils/customMessage';
 import statusCodes from '../../src/utils/statusCodes';
 
-
 chai.use(chaiHttp);
 chai.should();
 
@@ -99,7 +98,6 @@ describe('Application tests', () => {
         done();
       });
   });
-
 
   it('should apply to a job', (done) => {
     chai

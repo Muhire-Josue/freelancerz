@@ -19,7 +19,7 @@ const {
   applicationNotFound,
   notEligible
 } = customMessage;
-const { getAllApplicationsByApplicantIdOrJobId } = ApplicationService;
+const { getAllApplicationsByApplicantIdOrJobId, getApplicationById } = ApplicationService;
 const { getJobByStatusOrById } = JobService;
 const { getProfileByUserId } = ProfileService;
 
@@ -64,12 +64,10 @@ const duplicateJobApplication = async (req, res, next) => {
  * @returns {object} if the user did not apply to that job then it returns error message
  */
 const applicationExist = async (req, res, next) => {
-  const { applicantId, id } = req.body;
-  const userId = parseInt(applicantId, 10);
-  const jobId = parseInt(id, 10);
-  const applications = await getAllApplicationsByApplicantIdOrJobId(jobId, 'jobId');
-  const jobIds = generateJobIdFromArray(applications);
-  if (!jobIds.includes(jobId)) {
+  const { id } = req.body;
+  const applicationId = parseInt(id, 10);
+  const application = await getApplicationById(applicationId);
+  if (!application) {
     return errorResponse(res, notFound, applicationNotFound);
   }
   return next();

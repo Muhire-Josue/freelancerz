@@ -2,7 +2,7 @@ import express from 'express';
 import JobController from '../controllers/job.controller';
 import tokenAuthentication from '../middlewares/tokenAuthentication';
 import jobValidations from '../middlewares/jobValidations.middleware';
-import authorization from '../middlewares/authorization.middleware';
+import { jobAuthorization } from '../middlewares/authorization.middleware';
 
 const {
   createJob,
@@ -26,7 +26,7 @@ const route = express.Router();
 route.post('/jobs', [tokenAuthentication, validateJobObj, startDatesValidation, endDateValidation], createJob);
 route.get('/jobs', [tokenAuthentication, validateJobStatus], allOpenJobs);
 route.post('/job/view', [tokenAuthentication, validateId, jobExist], viewJob);
-route.put('/job', [tokenAuthentication, authorization, validateJobStatus, duplicateJobStatus, jobExist], updateJobStatus);
-route.put('/job/edit', [tokenAuthentication, authorization, validateJobObj, jobExist], updateJob);
-route.delete('/job', [tokenAuthentication, authorization, jobExist], deleteJob);
+route.put('/job', [tokenAuthentication, jobAuthorization, validateJobStatus, duplicateJobStatus, jobExist], updateJobStatus);
+route.put('/job/edit', [tokenAuthentication, jobAuthorization, validateJobObj, jobExist], updateJob);
+route.delete('/job', [tokenAuthentication, jobAuthorization, jobExist], deleteJob);
 export default route;

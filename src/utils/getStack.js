@@ -19,9 +19,11 @@ const generateStacksFromArrayOfId = async (IDs) => {
 const generateStacksForJobs = async (jobs) => {
   const stacks = [];
   for (let i = 0; i < jobs.length; i += 1) {
-    let jobIds = jobs[i].dataValues.stackId.split(',');
-    jobIds = jobIds.map(jobId => parseInt(jobId, 10));
-    stacks.push(generateStacksFromArrayOfId(jobIds));
+    if (jobs[i].dataValues.stackId) {
+      let jobIds = jobs[i].dataValues.stackId.split(',');
+      jobIds = jobIds.map(jobId => parseInt(jobId, 10));
+      stacks.push(generateStacksFromArrayOfId(jobIds));
+    }
   }
   const result = await Promise.all(stacks);
   jobs.forEach((job, i) => {
@@ -36,9 +38,11 @@ const generateStacksForJobs = async (jobs) => {
  * @returns {object} it returns the job with stacks
  */
 const generateStacksForAJob = async (job) => {
-  let stackIds = job.stackId.split(',');
-  stackIds = stackIds.map(id => parseInt(id, 10));
-  job.stacks = await generateStacksFromArrayOfId(stackIds);
+  if (job.stackId) {
+    let stackIds = job.stackId.split(',');
+    stackIds = stackIds.map(id => parseInt(id, 10));
+    job.stacks = await generateStacksFromArrayOfId(stackIds);
+  }
   return job;
 };
 

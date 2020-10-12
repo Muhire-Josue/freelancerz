@@ -25,7 +25,7 @@ const {
 routes.post('/auth/signup', [validateSignupObj, userAccountDuplication, githubUserExist], signup);
 routes.post('/auth/login', [validateLoginObj, checkUserExist, checkPasswordMatch, isAccountActive], login);
 routes.put('/notification/status/update', tokenAuthentication, enableOrDisableEmailNotification);
-routes.get('/user', [tokenAuthentication], getUser);
+routes.get('/user', getUser);
 routes.get('/stacks', findAllStacks);
 
 export default routes;

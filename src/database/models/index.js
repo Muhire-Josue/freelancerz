@@ -23,7 +23,6 @@ readdirSync(__dirname)
     db[model.name] = model;
   });
 
-
 Object.keys(db).forEach((modelName) => {
   db[modelName].associate(db);
 });

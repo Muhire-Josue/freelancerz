@@ -1,0 +1,24 @@
+version: '3'
+services:
+  api-freelancerz:
+    env_file:
+      - .env
+    container_name: api-freelancerz
+    build: .
+    ports:
+      - 3000:3000
+
+    depends_on:
+    - postgres
+    links:
+    - postgres
+
+  postgres:
+    container_name: postgres
+    restart: always
+    image: postgres
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: freelancerz_dev
