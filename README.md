@@ -5,7 +5,7 @@ Freelancerz is a web application that helps people to hire talented software dev
 
 
 ### API Link
-##### Heroku:  https://freelancerz-app.herokuapp.com/api/
+##### Localhost:  http://localhost:3000
 
 ### Requirements
 - `Nodejs v10-13` - a JavaScript run-time environment that executes JavaScript code outside of a browser
