@@ -1,4 +1,4 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/696b28a46a4d9ba447e7/maintainability)](https://codeclimate.com/github/Muhire-Josue/freelancerz/maintainability) [![Build Status](https://travis-ci.org/Muhire-Josue/freelancerz.svg?branch=develop)](https://travis-ci.org/Muhire-Josue/freelancerz) [![Coverage Status](https://coveralls.io/repos/github/Muhire-Josue/freelancerz/badge.svg?branch=develop)](https://coveralls.io/github/Muhire-Josue/freelancerz?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/696b28a46a4d9ba447e7/maintainability)](https://codeclimate.com/github/Muhire-Josue/freelancerz/maintainability) [![Coverage Status](https://coveralls.io/repos/github/Muhire-Josue/freelancerz/badge.svg?branch=develop)](https://coveralls.io/github/Muhire-Josue/freelancerz?branch=develop)
 
 # Freelancerz
 Freelancerz is a web application that helps people to hire talented software developers to work and collaborate on various software projects. 
@@ -57,7 +57,7 @@ npm test
 ### How can it be manually tested
 - using [postman](https://www.getpostman.com/downloads/)
 ### Pivotal tracker stories
-- Follow this [Link](https://www.pivotaltracker.com/n/projects/2429064)
+- Follow this [Link](https://www.pivotaltracker.com/n/projects/2432894)
 
 ### Technologies used
 
