@@ -10,6 +10,11 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
+    {
+      type: 'Admin',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
   ], {}),
 
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('UserTypes', null, {})

@@ -23,4 +23,25 @@ export default class ComplaintService {
     const complaintTypes = await ComplaintType.findAll();
     return complaintTypes;
   }
+
+  /**
+   * @description get all complaint
+   * @param {integer} complaintTypeId
+   * @returns {object} it returns an array of complaints
+   */
+  static async findAllComplaint(complaintTypeId) {
+    let complaints;
+    if (complaintTypeId) {
+      complaints = await Complaint.findAll({
+        where: { complaint_typeId: complaintTypeId },
+        include: [{ model: ComplaintType, as: 'complaint' }]
+
+      });
+    } else {
+      complaints = await Complaint.findAll({
+        include: [{ model: ComplaintType, as: 'complaint' }]
+      });
+    }
+    return complaints;
+  }
 }
