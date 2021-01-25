@@ -47,6 +47,8 @@ const messages = {
   notEligible: 'You dont qualify for this job',
   profileUpdated: 'Profile updated successfully',
   userData: 'User Data',
-  allStacks: 'All stacks'
+  allStacks: 'All stacks',
+  complaintSaved: 'Complaint submitted successfully',
+  allComplaintTypes: 'All complaint types'
 };
 export default messages;
