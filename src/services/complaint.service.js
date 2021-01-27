@@ -44,4 +44,16 @@ export default class ComplaintService {
     }
     return complaints;
   }
+
+  /**
+   * @description finds a complaint by id
+   * @param {integer} complaintId
+   * @returns {object} it returns an object if found
+   */
+  static async findComplaintById(complaintId) {
+    const complaint = await Complaint.findOne({
+      where: { id: complaintId }
+    });
+    return complaint;
+  }
 }

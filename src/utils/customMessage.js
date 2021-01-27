@@ -50,6 +50,8 @@ const messages = {
   allStacks: 'All stacks',
   complaintSaved: 'Complaint submitted successfully',
   allComplaintTypes: 'All complaint types',
-  allComplaint: 'All complaint'
+  allComplaint: 'All complaint',
+  complaintFound: 'Complaint found',
+  complaintNotFound: 'Complaint not found',
 };
 export default messages;

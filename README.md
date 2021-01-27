@@ -66,6 +66,8 @@ npm test
 | `/api/user`                   | GET     | Get user from token     |
 | `/api/complaint`              | POST    | Create a complain       |
 | `/api/complaintTypes`         | GET     | Get all complaint types |
+| `/api/complaints`             | GET     | Get all complaints      |
+| `/api/complaint/:id`          | GET     | Get a complaint         |
 
 ### How can it be manually tested
 
