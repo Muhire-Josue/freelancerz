@@ -7,15 +7,17 @@ const {
   save,
   findAllComplaintType,
   findAllComplaint,
-  findComplaintById
+  findComplaintById,
+  updateComplaint
 } = ComplaintService;
-const { successResponse, errorResponse } = responseHandler;
+const { successResponse, errorResponse, updatedResponse } = responseHandler;
 const {
   complaintSaved,
   allComplaintTypes,
   allComplaint,
   complaintFound,
-  complaintNotFound
+  complaintNotFound,
+  complaintUpdated
 } = customMessage;
 const { created, ok, notFound } = statusCodes;
 /**
@@ -76,5 +78,18 @@ export default class ComplaintController {
       return errorResponse(res, notFound, complaintNotFound);
     }
     return successResponse(res, ok, complaintFound, undefined, complaint);
+  }
+
+  /**
+    * @description update a complaint
+    * @param {Request} req
+    * @param {Response} res
+    * @returns {object} it returns a success message
+    */
+  static async editComplaint(req, res) {
+    const formData = req.body;
+    const { id } = req.params;
+    await updateComplaint(id, formData);
+    return updatedResponse(res, ok, complaintUpdated);
   }
 }

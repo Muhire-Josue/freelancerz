@@ -56,4 +56,14 @@ export default class ComplaintService {
     });
     return complaint;
   }
+
+  /**
+   * @description updates a complaint
+   * @param {integer} complaintId
+   * @param {object} data
+   * @returns {null} it returns nothing
+   */
+  static async updateComplaint(complaintId, data) {
+    await Complaint.update(data, { where: { id: complaintId } });
+  }
 }
