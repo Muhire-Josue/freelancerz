@@ -53,5 +53,6 @@ const messages = {
   allComplaint: 'All complaint',
   complaintFound: 'Complaint found',
   complaintNotFound: 'Complaint not found',
+  complaintUpdated: 'Complaint updated successfully'
 };
 export default messages;
