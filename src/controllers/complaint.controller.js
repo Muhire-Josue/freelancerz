@@ -3,10 +3,21 @@ import responseHandler from '../utils/responseHandler.util';
 import customMessage from '../utils/customMessage';
 import statusCodes from '../utils/statusCodes';
 
-const { save, findAllComplaintType, findAllComplaint } = ComplaintService;
-const { successResponse } = responseHandler;
-const { complaintSaved, allComplaintTypes, allComplaint } = customMessage;
-const { created, ok } = statusCodes;
+const {
+  save,
+  findAllComplaintType,
+  findAllComplaint,
+  findComplaintById
+} = ComplaintService;
+const { successResponse, errorResponse } = responseHandler;
+const {
+  complaintSaved,
+  allComplaintTypes,
+  allComplaint,
+  complaintFound,
+  complaintNotFound
+} = customMessage;
+const { created, ok, notFound } = statusCodes;
 /**
  * @description Comment controller
  */
@@ -50,5 +61,20 @@ export default class ComplaintController {
 
     const complaints = await findAllComplaint();
     return successResponse(res, ok, allComplaint, undefined, complaints);
+  }
+
+  /**
+    * @description get a complaint
+    * @param {Request} req
+    * @param {Response} res
+    * @returns {object} it returns a complaint
+    */
+  static async getComplaint(req, res) {
+    const { id } = req.params;
+    const complaint = await findComplaintById(id);
+    if (!complaint) {
+      return errorResponse(res, notFound, complaintNotFound);
+    }
+    return successResponse(res, ok, complaintFound, undefined, complaint);
   }
 }
