@@ -17,7 +17,6 @@ const { unauthorizedAccess } = customMessage;
  * @param {function} next
  * @returns {object} returns an error object, if the job does not belong to the user
  */
-
 export const jobAuthorization = async (req, res, next) => {
   const { id } = req.body;
   const jobId = parseInt(id, 10);
@@ -28,4 +27,18 @@ export const jobAuthorization = async (req, res, next) => {
   }
   return next();
 };
-export default jobAuthorization;
+
+/** *
+ * @description checks if the current user is an admin
+ * @param {request} req
+ * @param {response} res
+ * @param {function} next
+ * @returns {object} returns an error object, if the user is not an admin
+ */
+export const checkAdmin = (req, res, next) => {
+  const currentUser = req.authUser;
+  if (currentUser.userTypeId !== 3) {
+    return errorResponse(res, unAuthorized, unauthorizedAccess);
+  }
+  return next();
+};

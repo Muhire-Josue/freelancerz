@@ -49,6 +49,7 @@ const messages = {
   userData: 'User Data',
   allStacks: 'All stacks',
   complaintSaved: 'Complaint submitted successfully',
-  allComplaintTypes: 'All complaint types'
+  allComplaintTypes: 'All complaint types',
+  allComplaint: 'All complaint'
 };
 export default messages;
