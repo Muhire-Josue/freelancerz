@@ -68,6 +68,8 @@ npm test
 | `/api/complaintTypes`         | GET     | Get all complaint types |
 | `/api/complaints`             | GET     | Get all complaints      |
 | `/api/complaint/:id`          | GET     | Get a complaint         |
+| `/api/complaint/:id`          | PUT     | Update a complaint      |
+| `/api/complaint/:id`          | DELETE  | Delete a complaint      |
 
 ### How can it be manually tested
 

@@ -66,4 +66,13 @@ export default class ComplaintService {
   static async updateComplaint(complaintId, data) {
     await Complaint.update(data, { where: { id: complaintId } });
   }
+
+  /**
+   * @description deletes a complaint
+   * @param {integer} complaintId
+   * @returns {null} it returns nothing
+   */
+  static async deleteComplaint(complaintId) {
+    await Complaint.destroy({ where: { id: complaintId } });
+  }
 }

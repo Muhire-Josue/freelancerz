@@ -8,7 +8,8 @@ const {
   findAllComplaintType,
   findAllComplaint,
   findComplaintById,
-  updateComplaint
+  updateComplaint,
+  deleteComplaint,
 } = ComplaintService;
 const { successResponse, errorResponse, updatedResponse } = responseHandler;
 const {
@@ -17,7 +18,8 @@ const {
   allComplaint,
   complaintFound,
   complaintNotFound,
-  complaintUpdated
+  complaintUpdated,
+  complaintDelete,
 } = customMessage;
 const { created, ok, notFound } = statusCodes;
 /**
@@ -91,5 +93,17 @@ export default class ComplaintController {
     const { id } = req.params;
     await updateComplaint(id, formData);
     return updatedResponse(res, ok, complaintUpdated);
+  }
+
+  /**
+    * @description delete a complaint
+    * @param {Request} req
+    * @param {Response} res
+    * @returns {object} it returns a success message
+    */
+  static async deleteAComplaint(req, res) {
+    const { id } = req.params;
+    await deleteComplaint(id);
+    return updatedResponse(res, ok, complaintDelete);
   }
 }
