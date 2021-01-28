@@ -22,13 +22,15 @@ const {
   enableOrDisableEmailNotification,
   getUser,
   findAllStacks,
-  activateDeveloperAccount
+  activateDeveloperAccount,
+  declineDeveloperAccount
 } = UserController;
 
 route.post('/auth/signup', [validateSignupObj, userAccountDuplication, githubUserExist], signup);
 route.post('/auth/login', [validateLoginObj, checkUserExist, checkPasswordMatch, isAccountActive], login);
 route.put('/notification/status/update', tokenAuthentication, enableOrDisableEmailNotification);
 route.put('/user/activate/:id', [tokenAuthentication, checkAdmin, checkUserExistById], activateDeveloperAccount);
+route.put('/user/activate/:id', [tokenAuthentication, checkAdmin, checkUserExistById], declineDeveloperAccount);
 route.get('/user', getUser);
 route.get('/stacks', findAllStacks);
 
