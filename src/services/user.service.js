@@ -51,10 +51,17 @@ export default class UserServices {
  * @returns {null} nothing
  */
   static async updateProfile(data, id) {
-    await Users.update(data, {
-      where: {
-        id
-      }
-    });
+    if (data === 'active' || data === 'declined') {
+      await Users.update(
+        { status: data },
+        { where: { id } }
+      );
+    } else {
+      await Users.update(data, {
+        where: {
+          id
+        }
+      });
+    }
   }
 }
