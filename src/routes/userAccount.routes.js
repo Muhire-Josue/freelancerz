@@ -3,6 +3,8 @@ import UserController from '../controllers/user.controller';
 import validations from '../middlewares/authValidations.middleware';
 import tokenAuthentication from '../middlewares/tokenAuthentication';
 import githubUserDataValidation from '../middlewares/githubData.validation.middleware';
+import { checkAdmin } from '../middlewares/authorization.middleware';
+import checkUserExistById from '../middlewares/checkUserExist.middleware';
 
 const { githubUserExist } = githubUserDataValidation;
 const {
@@ -13,19 +15,21 @@ const {
   validateLoginObj,
   isAccountActive
 } = validations;
-const routes = express.Router();
+const route = express.Router();
 const {
   signup,
   login,
   enableOrDisableEmailNotification,
   getUser,
-  findAllStacks
+  findAllStacks,
+  activateDeveloperAccount
 } = UserController;
 
-routes.post('/auth/signup', [validateSignupObj, userAccountDuplication, githubUserExist], signup);
-routes.post('/auth/login', [validateLoginObj, checkUserExist, checkPasswordMatch, isAccountActive], login);
-routes.put('/notification/status/update', tokenAuthentication, enableOrDisableEmailNotification);
-routes.get('/user', getUser);
-routes.get('/stacks', findAllStacks);
+route.post('/auth/signup', [validateSignupObj, userAccountDuplication, githubUserExist], signup);
+route.post('/auth/login', [validateLoginObj, checkUserExist, checkPasswordMatch, isAccountActive], login);
+route.put('/notification/status/update', tokenAuthentication, enableOrDisableEmailNotification);
+route.put('/user/activate/:id', [tokenAuthentication, checkAdmin, checkUserExistById], activateDeveloperAccount);
+route.get('/user', getUser);
+route.get('/stacks', findAllStacks);
 
-export default routes;
+export default route;

@@ -7,7 +7,12 @@ import customMessage from '../utils/customMessage';
 import tokenGenerator from '../utils/jwtTokenGenerator';
 import handleProfile from '../utils/HandleProfile';
 
-const { createUser, getUserByEmailOrById, changeEmailNotificationStatus } = UserService;
+const {
+  createUser,
+  getUserByEmailOrById,
+  changeEmailNotificationStatus,
+  updateProfile
+} = UserService;
 const { getAllStack } = StackService;
 const { created, ok } = statusCode;
 const {
@@ -16,6 +21,7 @@ const {
   notificationStatusUpdated,
   userData,
   allStacks,
+  userApproved
 } = customMessage;
 const { successResponse, updatedResponse } = handleResponse;
 const { createProfile } = handleProfile;
@@ -96,5 +102,17 @@ export default class UserController {
   static async findAllStacks(req, res) {
     const stacks = await getAllStack();
     return successResponse(res, ok, allStacks, undefined, stacks);
+  }
+
+  /**
+   * @description admin activates a developer's account
+   * @param {request} req
+   * @param {response} res
+   * @returns {object} it returns a success message
+   */
+  static async activateDeveloperAccount(req, res) {
+    const { id } = req.params;
+    await updateProfile('active', id);
+    return updatedResponse(res, ok, userApproved);
   }
 }

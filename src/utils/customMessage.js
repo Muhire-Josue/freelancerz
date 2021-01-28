@@ -55,5 +55,7 @@ const messages = {
   complaintNotFound: 'Complaint not found',
   complaintUpdated: 'Complaint updated successfully',
   complaintDelete: 'Complaint deleted successfully',
+  userApproved: 'User approved successfully',
+  userISNotFound: 'User not found',
 };
 export default messages;
