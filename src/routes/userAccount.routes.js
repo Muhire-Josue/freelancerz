@@ -13,7 +13,7 @@ const {
   checkUserExist,
   checkPasswordMatch,
   validateLoginObj,
-  isAccountActive
+  isAccountActive,
 } = validations;
 const route = express.Router();
 const {
@@ -22,14 +22,16 @@ const {
   enableOrDisableEmailNotification,
   getUser,
   findAllStacks,
-  activateDeveloperAccount
+  activateDeveloperAccount,
+  declineDeveloperAccount
 } = UserController;
 
 route.post('/auth/signup', [validateSignupObj, userAccountDuplication, githubUserExist], signup);
 route.post('/auth/login', [validateLoginObj, checkUserExist, checkPasswordMatch, isAccountActive], login);
 route.put('/notification/status/update', tokenAuthentication, enableOrDisableEmailNotification);
 route.put('/user/activate/:id', [tokenAuthentication, checkAdmin, checkUserExistById], activateDeveloperAccount);
-route.get('/user', getUser);
+route.put('/user/decline/:id', [tokenAuthentication, checkAdmin, checkUserExistById], declineDeveloperAccount);
+route.get('/user', tokenAuthentication, getUser);
 route.get('/stacks', findAllStacks);
 
 export default route;

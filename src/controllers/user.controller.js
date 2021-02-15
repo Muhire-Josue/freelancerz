@@ -21,7 +21,8 @@ const {
   notificationStatusUpdated,
   userData,
   allStacks,
-  userApproved
+  userApproved,
+  userDeclined
 } = customMessage;
 const { successResponse, updatedResponse } = handleResponse;
 const { createProfile } = handleProfile;
@@ -87,8 +88,7 @@ export default class UserController {
    * @returns {object} it returns the user from the token
    */
   static async getUser(req, res) {
-    const { id } = req.query;
-    const userId = parseInt(id, 10);
+    const userId = req.authUser.id;
     const user = await getUserByEmailOrById(userId);
     return successResponse(res, ok, userData, undefined, user);
   }
@@ -114,5 +114,17 @@ export default class UserController {
     const { id } = req.params;
     await updateProfile('active', id);
     return updatedResponse(res, ok, userApproved);
+  }
+
+  /**
+   * @description admin deactivates a developer's account
+   * @param {request} req
+   * @param {response} res
+   * @returns {object} it returns a success message
+   */
+  static async declineDeveloperAccount(req, res) {
+    const { id } = req.params;
+    await updateProfile('declined', id);
+    return updatedResponse(res, ok, userDeclined);
   }
 }
