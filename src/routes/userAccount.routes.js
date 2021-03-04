@@ -21,6 +21,7 @@ const {
   login,
   enableOrDisableEmailNotification,
   getUser,
+  getUsers,
   findAllStacks,
   activateDeveloperAccount,
   declineDeveloperAccount
@@ -32,6 +33,7 @@ route.put('/notification/status/update', tokenAuthentication, enableOrDisableEma
 route.put('/user/activate/:id', [tokenAuthentication, checkAdmin, checkUserExistById], activateDeveloperAccount);
 route.put('/user/decline/:id', [tokenAuthentication, checkAdmin, checkUserExistById], declineDeveloperAccount);
 route.get('/user', tokenAuthentication, getUser);
+route.get('/users', tokenAuthentication, getUsers);
 route.get('/stacks', findAllStacks);
 
 export default route;

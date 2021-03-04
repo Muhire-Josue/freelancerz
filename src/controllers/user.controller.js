@@ -20,6 +20,7 @@ const {
   successfulLogin,
   notificationStatusUpdated,
   userData,
+  getUsers,
   allStacks,
   userApproved,
   userDeclined
@@ -90,6 +91,18 @@ export default class UserController {
   static async getUser(req, res) {
     const userId = req.authUser.id;
     const user = await getUserByEmailOrById(userId);
+    return successResponse(res, ok, userData, undefined, user);
+  }
+
+  
+  /**
+   * @description get the user from the token
+   * @param {request} req
+   * @param {response} res
+   * @returns {object} it returns the user from the token
+   */
+  static async getUsers(req, res) {
+    const user = await getUsers();
     return successResponse(res, ok, userData, undefined, user);
   }
 

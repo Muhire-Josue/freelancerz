@@ -10,7 +10,8 @@ const {
   saveJob,
   getJobByStatusOrById,
   updateJob: update,
-  deleteJobByJobId
+  deleteJobByJobId,
+  getJobs
 } = JobService;
 const { saveStack } = StackService;
 const { getUserByEmailOrById } = UserService;
@@ -54,6 +55,17 @@ export default class JobController {
   static async allOpenJobs(req, res) {
     const { status } = req.query;
     const jobs = await getJobByStatusOrById(status);
+    const jobsWithStacks = await generateStacksForJobs(jobs);
+    return successResponse(res, ok, allJobs, undefined, jobsWithStacks);
+  }
+
+  /**
+   * @param {request} req
+   * @param {response} res
+   * @returns {object} it returns all open/available jobs
+   */
+  static async allJobs(req, res) {
+    const jobs = await getJobs();
     const jobsWithStacks = await generateStacksForJobs(jobs);
     return successResponse(res, ok, allJobs, undefined, jobsWithStacks);
   }
