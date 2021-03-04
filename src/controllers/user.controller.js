@@ -9,6 +9,7 @@ import handleProfile from '../utils/HandleProfile';
 
 const {
   createUser,
+  getAllUsers,
   getUserByEmailOrById,
   changeEmailNotificationStatus,
   updateProfile
@@ -20,7 +21,6 @@ const {
   successfulLogin,
   notificationStatusUpdated,
   userData,
-  getUsers,
   allStacks,
   userApproved,
   userDeclined
@@ -102,7 +102,9 @@ export default class UserController {
    * @returns {object} it returns the user from the token
    */
   static async getUsers(req, res) {
-    const user = await getUsers();
+    console.log('in get Users')
+    const user = await getAllUsers();
+    console.log(user)
     return successResponse(res, ok, userData, undefined, user);
   }
 

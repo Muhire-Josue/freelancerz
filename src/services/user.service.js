@@ -35,7 +35,7 @@ export default class UserServices {
  * @description finds all users
  * @returns {object} it returns an object if found
  */
-static async getUsers() {
+  static async getAllUsers() {
   
    let user = Users.findAll();
     return user;
