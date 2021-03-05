@@ -102,9 +102,7 @@ export default class UserController {
    * @returns {object} it returns the user from the token
    */
   static async getUsers(req, res) {
-    console.log('in get Users')
     const user = await getAllUsers();
-    console.log(user)
     return successResponse(res, ok, userData, undefined, user);
   }
 
