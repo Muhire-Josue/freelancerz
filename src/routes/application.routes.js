@@ -16,6 +16,7 @@ const {
   applyJob,
   approveJobApplication,
   allJobApplications,
+  viewAllApplications,
   jobApplication
 } = ApplicationController;
 
@@ -29,6 +30,7 @@ route.post('/job/apply', [
   isApplicantEligible,
 ], applyJob);
 route.put('/job/apply/approve', [tokenAuthentication, validateId, applicationExist], approveJobApplication);
+route.post('/job/application/all', [tokenAuthentication], viewAllApplications);
 route.post('/job/applications', [tokenAuthentication, validateId, jobExist], allJobApplications);
 route.post('/job/application', [tokenAuthentication, validateId, applicationExist], jobApplication);
 export default route;
