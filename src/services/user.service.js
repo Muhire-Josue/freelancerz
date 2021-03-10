@@ -32,6 +32,17 @@ export default class UserServices {
   }
 
   /**
+ * @description finds all users
+ * @returns {object} it returns an object if found
+ */
+  static async getAllUsers() {
+  
+   let user = Users.findAll();
+    return user;
+  
+}
+
+  /**
    * @description changes value of getEmailNotification
    * @param {string} email
    * @param {boolean} status

@@ -11,6 +11,7 @@ const {
   updateJobStatus,
   updateJob,
   deleteJob,
+  allJobs,
 } = JobController;
 const {
   validateJobObj,
@@ -25,6 +26,7 @@ const route = express.Router();
 
 route.post('/jobs', [tokenAuthentication, validateJobObj, startDatesValidation, endDateValidation], createJob);
 route.get('/jobs', [validateJobStatus], allOpenJobs);
+route.get('/jobs/all', allJobs);
 route.post('/job/view', [tokenAuthentication, validateId, jobExist], viewJob);
 route.put('/job', [tokenAuthentication, jobAuthorization, validateJobStatus, duplicateJobStatus, jobExist], updateJobStatus);
 route.put('/job/edit', [tokenAuthentication, jobAuthorization, validateJobObj, jobExist], updateJob);

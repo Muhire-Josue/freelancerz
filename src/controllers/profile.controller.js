@@ -22,8 +22,11 @@ export default class ProfileController {
      */
   static async userProfile(req, res) {
     const { userId } = req.body;
+    console.log(userId)
     const id = parseInt(userId, 10);
+    console.log(id)
     const profile = await getProfileByUserId(id);
+    console.log(profile)
     return successResponse(res, ok, profileData, undefined, profile);
   }
 

@@ -22,7 +22,7 @@ export default class ProfileService {
      */
   static async getProfileByUserId(userId) {
     const profile = await Profile.findOne({
-      where: { userId },
+      where: { userId},
       include: [{ model: Users, as: 'user' }]
     });
     return profile;

@@ -12,6 +12,7 @@ import sendEmail from '../utils/sendEmail';
 const {
   saveApplication,
   updateApplicationStatus,
+  getAllApplications,
   getAllApplicationsByApplicantIdOrJobId,
   getApplicationById,
 } = ApplicationService;
@@ -100,6 +101,19 @@ export default class ApplicationController {
     }
     return successResponse(res, ok, allApplications, undefined, applications);
   }
+
+  
+   /** jobId
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {array} it returns all applications for a specific job
+   */
+    static async viewAllApplications(req, res) {
+      
+      const applications = await getAllApplications();
+      
+      return successResponse(res, ok, allApplications, undefined, applications);
+    }
 
   /**
    * @param {Request} req

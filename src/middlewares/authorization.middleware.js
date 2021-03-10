@@ -22,7 +22,7 @@ export const jobAuthorization = async (req, res, next) => {
   const jobId = parseInt(id, 10);
   const currentUser = req.authUser;
   const { dataValues } = await getJobByStatusOrById(jobId);
-  if (dataValues.clientId !== currentUser.id) {
+  if (dataValues.clientId !== currentUser.id && currentUser.userTypeId!=3) {
     return errorResponse(res, unAuthorized, unauthorizedAccess);
   }
   return next();

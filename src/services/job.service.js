@@ -47,6 +47,18 @@ export default class JobService {
   }
 
   /**
+ * @description finds all jobs with particular status
+ * @param {integer} data
+ * @returns {object} it returns the job based on a particular data
+ */
+static async getJobs() {
+  
+    const jobs = await Job.findAll({
+      include: [{ model: Users, as: 'jobOwner' }]
+    });
+    return jobs;
+}
+  /**
    * @description update job
    * @param {integer} id
    * @param {string} data

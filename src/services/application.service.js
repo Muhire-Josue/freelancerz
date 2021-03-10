@@ -17,6 +17,27 @@ export default class JobService {
     const applicationInfo = await JobApplications.create(application);
     return applicationInfo;
   }
+  
+
+  /**
+   * @description get all applications of a developer
+   * @returns {array} it returns all applications of a developer
+   */
+   static async getAllApplications(id, type) {
+    
+    
+      let applications = await JobApplications.findAll({
+        
+        include: [
+          {
+            model: Users, as: 'users', include: [{ model: Profile, as: 'profile' }], attributes: ['firstName', 'lastName', 'email', 'phoneNumber', 'linkedIn', 'githubUsername', 'status', 'getEmailNotification', 'stackId']
+          },
+          { model: Job, as: 'job' }
+        ]
+
+      });
+    return applications;
+  }
 
   /**
    * @description get all applications of a developer
